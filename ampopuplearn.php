@@ -25,14 +25,13 @@
  * Domain Path:       /languages
  */
 
+namespace AmpopupLearn;
+
+use AmpopupLearn\Inc\Activator;
+use AmpopupLearn\Inc\Deactivator;
+use AmpopupLearn\Inc\Ampopuplearn;
 
 require plugin_dir_path( __FILE__ ) . 'autoload.php';
-
-use AmpopupLearn\Include\Activator;
-use AmpopupLearn\Include\Deactivator;
-use AmpopupLearn\Include\Ampopuplearn;
-
-var_dump( new Ampopuplearn() )
 
 
 // If this file is called directly, abort.
