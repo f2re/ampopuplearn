@@ -17,16 +17,8 @@ class AmView {
     var $plugin_name = "amview";
 
     public function __construct( $noenqueue=false ) {
-        
-		// 
-        // include validate and jquery scripts
-        // 
-        if ( !$noenqueue ) {
-            $this->enqueue_scripts();
-        }
-
-        
-
+        $this->enqueue_scripts();
+        $this->enqueue_styles();
     }
     
     /**
@@ -51,7 +43,30 @@ class AmView {
      * @return void
      */
     private function print_begin(){
+        ?>
+        <div id="ampopmusiclearn" class="bg-white w-100 h-100">
+        <?php
+
         $this->print_head();
+
+        // print search bar
+        $this->print_searchbar();
+    }
+
+    /**
+     * Print serach bar
+     *
+     * @return void
+     */
+    private function print_searchbar(){
+        ?>
+        <div class="input-group mb-3 searchbar">
+            <div class="input-group-prepend searchbar__prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+            </div>
+            <input type="text" class="form-control searchbar__input" v-model="query" placeholder="Search for student">
+        </div>
+        <?php
     }
 
     /**
@@ -61,7 +76,7 @@ class AmView {
      */
     private function print_head(){
         ?>
-            <div class="head">head</div>
+            
         <?php
     }
 
@@ -85,6 +100,8 @@ class AmView {
     private function print_end(){
         ?>
             <div class="end">end</div>
+
+            </div>
         <?php
     }
 
@@ -92,10 +109,17 @@ class AmView {
      * [enqueue_scripts jquery and validate
      * @return [type] [description]
      */
-    public function enqueue_scripts(){
-
+    public function enqueue_scripts(){  
 		wp_enqueue_script( 'vue', plugin_dir_url( __FILE__ ) . '../js/vendor/vue.js', [], '2.6.11', false );
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . '../js/ampopuplearn-public.js', array( 'vue' ), '1.0', false );
+		wp_enqueue_script( 'ampoppublic', plugin_dir_url( __FILE__ ) . '../js/ampopuplearn-public.js', array( 'vue' ), '1.0', false );
+    }
+
+    /**
+     * [enqueue_scripts jquery and validate
+     * @return [type] [description]
+     */
+    public function enqueue_styles(){  
+		wp_enqueue_style( 'ampoppublic_style', plugin_dir_url( __FILE__ ) . '../css/ampopuplearn-public.css', array(), '1.0', 'all' );
     }
 
 }

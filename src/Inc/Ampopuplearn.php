@@ -109,29 +109,6 @@ class Ampopuplearn {
 	 */
 	private function load_dependencies() {
 
-		/**
-		 * The class responsible for orchestrating the actions and filters of the
-		 * core plugin.
-		 */
-		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-ampopuplearn-loader.php';
-
-		/**
-		 * The class responsible for defining internationalization functionality
-		 * of the plugin.
-		 */
-		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-ampopuplearn-i18n.php';
-
-		/**
-		 * The class responsible for defining all actions that occur in the admin area.
-		 */
-		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-ampopuplearn-admin.php';
-
-		/**
-		 * The class responsible for defining all actions that occur in the public-facing
-		 * side of the site.
-		 */
-		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-ampopuplearn-public.php';
-
 		$this->loader = new Loader();
 
 	}
@@ -164,7 +141,7 @@ class Ampopuplearn {
 
 		$plugin_admin = new Admin( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
+		$this->loader->add_action( 'admin_enqueue_style', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
 	}
@@ -180,7 +157,7 @@ class Ampopuplearn {
 
 		$plugin_public = new View( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
+		$this->loader->add_action( 'wp_enqueue_style', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
 	}
@@ -196,6 +173,8 @@ class Ampopuplearn {
 	private function define_shortcodes() {
 		// add shortcode Certifications is the user added certifications
 		$am_view = new AmView();
+		// $this->loader->add_action( 'wp_enqueue_style', $am_view, 'enqueue_styles' );
+		// $this->loader->add_action( 'wp_enqueue_scripts', $am_view, 'enqueue_scripts' );
 		$this->loader->add_shortcode( 'ampopmusiclearn_init', [$am_view,'run'] );
 	}
 

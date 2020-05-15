@@ -5,7 +5,11 @@
 	 */
 
 	var vm = new Vue({
-	  el: document.querySelector('#ampopmusiclearn'),
+	  el: '#ampopmusiclearn',
+	  data:{
+		// search query variable
+		query:'',
+	  },
 	  mounted: function(){
 		console.log("Hello Vue!");
 	  }

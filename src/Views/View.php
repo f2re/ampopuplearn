@@ -73,8 +73,8 @@ class View {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/ampopuplearn-public.css', array(), $this->version, 'all' );
-
+		// wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/ampopuplearn-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'ampoppublic_style', plugin_dir_url( __FILE__ ) . 'css/ampopuplearn-public.css', array(), '1.0', 'all' );
 	}
 
 	/**
@@ -97,8 +97,8 @@ class View {
 		 */
 
 		
-		wp_enqueue_script( 'vue', plugin_dir_url( __FILE__ ) . 'js/vendor/vue.js', [], '2.6.11', false );
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/ampopuplearn-public.js', array( 'vue' ), $this->version, false );
+		// wp_enqueue_script( 'vue', plugin_dir_url( __FILE__ ) . 'js/vendor/vue.js', [], '2.6.11', false );
+		// wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/ampopuplearn-public.js', array( 'vue' ), $this->version, false );
 
 	}
 

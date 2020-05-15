@@ -1,0 +1,45 @@
+// Bootstrap Required
+@import "bootstrap/functions";
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+@import "bootstrap/utilities";
+@import "bootstrap/forms";
+@import "bootstrap/input-group";
+@import "bootstrap/mixins/breakpoints";
+
+
+// Bootstrap Optional
+@import "bootstrap/reboot";
+@import "bootstrap/type";
+@import "bootstrap/images"; 
+@import "bootstrap/code";
+@import "bootstrap/grid";
+
+// Threat Scholar Specific
+@import "variables";
+
+// Fontawersome styles
+@import "fas/fontawesome";
+
+
+.searchbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__prepend{
+        .input-group-text{
+            color: $primary-text;
+            background-color: unset;
+            padding: 0;
+            border: none;
+        }
+    }
+
+    &__input{
+        max-width: 200px;
+        font-size: 20px !important;
+        padding-left:5px;
+    }
+
+}
