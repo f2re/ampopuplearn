@@ -3,7 +3,7 @@
 @import "bootstrap/variables";
 @import "bootstrap/mixins";
 @import "bootstrap/utilities";
-@import "bootstrap/forms";
+// @import "bootstrap/forms";
 @import "bootstrap/input-group";
 @import "bootstrap/mixins/breakpoints";
 
@@ -21,11 +21,18 @@
 // Fontawersome styles
 @import "fas/fontawesome";
 
+.bg-light{
+    background-color: $bg-light;
+}
 
+/**
+ * Search bar section
+ */ 
 .searchbar {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom:30px;
 
     &__prepend{
         .input-group-text{
@@ -33,13 +40,46 @@
             background-color: unset;
             padding: 0;
             border: none;
+            i{
+                font-size: 20px;
+            }
         }
     }
 
     &__input{
-        max-width: 200px;
-        font-size: 20px !important;
-        padding-left:5px;
+        @at-root {
+            input[type='text']#{&} {
+                max-width: 200px;
+                font-size: 18px !important;
+                padding-left:15px;
+                background-color: transparent;
+                &:selection{
+                    background-color: transparent;
+                }
+            }
+        }
     }
 
+}
+
+/**
+ * Tabs section
+ */ 
+.ampoptabs{
+    &__button{
+        background-color: $primary-second;
+        text-transform: none;
+        text-decoration: none;
+        font-size: 14px;
+        border: 0px;
+        border-radius: 0px;
+        padding:20px 5px;
+        cursor: pointer;
+        margin: 0;
+        width: 180px;
+
+        &.active, &:hover{
+            background-color: $primary;
+        }
+    }
 }

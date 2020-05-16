@@ -12,6 +12,8 @@
  */
 namespace AmpopupLearn\Views\Partials;
 
+use AmpopupLearn\Helpers\PostHelper;
+
 class AmView {
 
     var $plugin_name = "amview";
@@ -44,13 +46,15 @@ class AmView {
      */
     private function print_begin(){
         ?>
-        <div id="ampopmusiclearn" class="bg-white w-100 h-100">
+        <div id="ampopmusiclearn" class="bg-light w-100 h-100">
         <?php
 
-        $this->print_head();
 
         // print search bar
         $this->print_searchbar();
+
+        // print head with music menu
+        $this->print_head();
     }
 
     /**
@@ -75,8 +79,18 @@ class AmView {
      * @return void
      */
     private function print_head(){
+        // get music categories or tab
+        $tabs = PostHelper::get_music_categories(true);
         ?>
-            
+            <div class="d-flex justify-content-between align-content-between flex-nowrap ampoptabs">
+                <?php
+                    foreach ($tabs as $tab){
+                        ?>
+                        <button class="btn btn-primary ampoptabs__button"><?=$tab['title']?></button>
+                        <?php
+                    }
+                ?>
+            </div>
         <?php
     }
 
@@ -86,8 +100,49 @@ class AmView {
      * @return void
      */    
     private function print_content( ){
+        // print students block
+        $this->print_students();
+    }
+
+    /**
+     * Print students block
+     *
+     * @return void
+     */
+    private function print_students(){
         ?>
-            <div class="content">content</div>
+        <div class="students">
+            <div class="students__head d-flex justify-content-between align-content-between">
+                <h1>Students <span class="badge badge-light students__head--badge">12</span> </h1>
+
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-primary students__head--button"><i class="fas fa-file-pdf"></i> PDF </button>
+                    <button class="btn btn-primary students__head--button"><i class="fas fa-envelope"></i> Email </button>
+                </div>
+            </div>
+            <hr class="students__head--hr d-shadow">
+
+            <div class="students__table">
+                <!-- Table header -->
+                <div class="students__table--header">
+                    <div class="header__student active">Student <span class="action__sort"><i class="fas fa-arrow-up"></i></span> </div>
+                    <div class="header__points">Points <span class="action__sort"><i class="fas fa-arrow-up"></i></span> </div>
+                    <div class="header__percent">Percent completed <span class="action__sort"><i class="fas fa-arrow-up"></i></span> </div>
+                    <div class="header__date">Start Date <span class="action__sort"><i class="fas fa-arrow-up"></i></span> </div>
+                    <div class="header__login">Login count <span class="action__sort"><i class="fas fa-arrow-up"></i></span> </div>
+                    <div class="header__time">Course Time <span class="action__sort"><i class="fas fa-arrow-up"></i></span> </div>
+                    <div class="header__laststep">Latest Course Step <span class="action__sort"><i class="fas fa-arrow-up"></i></span> </div>
+                    <div class="header__lastlogin">Last Login Date<span class="action__sort"><i class="fas fa-arrow-up"></i></span> </div>
+                    <div class="header__contact">Contact <span class="action__sort"><i class="fas fa-arrow-up"></i></span> </div>
+                </div>
+                <!-- Table body -->
+                <div class="students__table--body">
+
+                </div>
+
+            </div>
+
+        </div>
         <?php
     }
 
