@@ -1,0 +1,43 @@
+@mixin flat-button {
+    background-color: $primary-second;
+    text-transform: none;
+    text-decoration: none;
+    font-size: 14px;
+    border: 0px;
+    border-radius: 0px;
+    padding:20px 5px;
+    cursor: pointer;
+    margin: 0;
+
+    &:hover{
+        background-color: $primary;
+    }
+}
+
+@mixin round-button {
+    background-color: transparent;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: $primary;
+    font-size: 14px;
+    border: 1px solid $primary-text;
+    border-radius: 5px;
+    padding:5px 16px;
+    cursor: pointer;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    line-height: 27px;
+
+    i{
+        font-size: 18px;
+        line-height: 27px;
+        margin-right: 12px;
+    }
+
+    &:hover{
+        background-color: $primary;
+        border: 1px solid $primary-text;
+    }
+}

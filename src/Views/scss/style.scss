@@ -15,8 +15,9 @@
 @import "bootstrap/code";
 @import "bootstrap/grid";
 
-// Threat Scholar Specific
+// AmPop music Specific
 @import "variables";
+@import "mixins";
 
 // Fontawersome styles
 @import "fas/fontawesome";
@@ -67,15 +68,7 @@
  */ 
 .ampoptabs{
     &__button{
-        background-color: $primary-second;
-        text-transform: none;
-        text-decoration: none;
-        font-size: 14px;
-        border: 0px;
-        border-radius: 0px;
-        padding:20px 5px;
-        cursor: pointer;
-        margin: 0;
+        @include flat-button;
         width: 180px;
 
         &.active, &:hover{
@@ -83,3 +76,91 @@
         }
     }
 }
+
+/**
+ * Students section
+ */ 
+ .students{
+     background-color: white;
+
+     &__head{
+        padding: $table-padding-left;
+        color: $primary;
+        height: 80px;
+
+        &--badge{
+            margin-left:20px;
+            background-color: $primary;
+            color: white!important;
+            font-weight: bold;
+            height: 27px;
+            padding: 5px 10px;
+            font-size: 12px;
+            border-radius: 5px;
+            line-height: normal;
+            display: inline-block;
+            margin-top: 2%;
+            line-height: 16px;
+        }
+        h1{
+            width: auto;
+            margin: 0px!important;
+            color: $primary!important;
+            font-size: 26px !important;
+            font-weight: bold !important;
+            line-height: normal!important;
+            display: flex!important;
+        }
+
+        &--button{
+            @include round-button;
+            width: auto;
+        }
+
+        &--group{
+            color: $primary;
+            font-size: 14px;
+        }
+
+        &--prepend span{
+            background-color: transparent;
+            color: $primary;
+            font-size: 14px;
+            font-weight: bold;
+            border-top: 1px solid $primary-text;
+            border-left: 1px solid $primary-text;
+            border-bottom: 1px solid $primary-text;
+            border-right: 0px;
+            padding-left:17px;
+        }
+        &--append span{
+            @include flat-button;
+            padding: 10px;
+            color:white;
+            background-color: $primary;
+            width: 35px;
+            text-align: center;
+            display: block;
+            line-height: 18px;
+            &:hover{
+                border: 0px;
+            }
+            i{
+                font-size: 12px;
+                line-height: 18px;
+                margin: 0;
+            }
+        }
+        &--input{
+            background-color: transparent;
+            border: 0px;
+            color: $primary-text;
+            font-size: 14px;
+            font-weight: bold;
+            width: 100px;
+            padding: 5px 0px;
+            border-top: 1px solid $primary-text;
+            border-bottom: 1px solid $primary-text;
+        }
+     }
+ }

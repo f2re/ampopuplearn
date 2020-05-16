@@ -11659,8 +11659,127 @@ input[type=text].searchbar__input:selection {
   margin: 0;
   width: 180px;
 }
+.ampoptabs__button:hover {
+  background-color: #4850a9;
+}
 .ampoptabs__button.active, .ampoptabs__button:hover {
   background-color: #4850a9;
+}
+
+/**
+ * Students section
+ */
+.students {
+  background-color: white;
+}
+.students__head {
+  padding: 20px;
+  color: #4850a9;
+  height: 80px;
+}
+.students__head--badge {
+  margin-left: 20px;
+  background-color: #4850a9;
+  color: white !important;
+  font-weight: bold;
+  height: 27px;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 5px;
+  line-height: normal;
+  display: inline-block;
+  margin-top: 2%;
+  line-height: 16px;
+}
+.students__head h1 {
+  width: auto;
+  margin: 0px !important;
+  color: #4850a9 !important;
+  font-size: 26px !important;
+  font-weight: bold !important;
+  line-height: normal !important;
+  display: flex !important;
+}
+.students__head--button {
+  background-color: transparent;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #4850a9;
+  font-size: 14px;
+  border: 1px solid #a0a1a0;
+  border-radius: 5px;
+  padding: 5px 16px;
+  cursor: pointer;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  line-height: 27px;
+  width: auto;
+}
+.students__head--button i {
+  font-size: 18px;
+  line-height: 27px;
+  margin-right: 12px;
+}
+.students__head--button:hover {
+  background-color: #4850a9;
+  border: 1px solid #a0a1a0;
+}
+.students__head--group {
+  color: #4850a9;
+  font-size: 14px;
+}
+.students__head--prepend span {
+  background-color: transparent;
+  color: #4850a9;
+  font-size: 14px;
+  font-weight: bold;
+  border-top: 1px solid #a0a1a0;
+  border-left: 1px solid #a0a1a0;
+  border-bottom: 1px solid #a0a1a0;
+  border-right: 0px;
+  padding-left: 17px;
+}
+.students__head--append span {
+  background-color: #9397ca;
+  text-transform: none;
+  text-decoration: none;
+  font-size: 14px;
+  border: 0px;
+  border-radius: 0px;
+  padding: 20px 5px;
+  cursor: pointer;
+  margin: 0;
+  padding: 10px;
+  color: white;
+  background-color: #4850a9;
+  width: 35px;
+  text-align: center;
+  display: block;
+  line-height: 18px;
+}
+.students__head--append span:hover {
+  background-color: #4850a9;
+}
+.students__head--append span:hover {
+  border: 0px;
+}
+.students__head--append span i {
+  font-size: 12px;
+  line-height: 18px;
+  margin: 0;
+}
+.students__head--input {
+  background-color: transparent;
+  border: 0px;
+  color: #a0a1a0;
+  font-size: 14px;
+  font-weight: bold;
+  width: 100px;
+  padding: 5px 0px;
+  border-top: 1px solid #a0a1a0;
+  border-bottom: 1px solid #a0a1a0;
 }
 
 /*# sourceMappingURL=ampopuplearn-public.css.map */

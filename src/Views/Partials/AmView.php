@@ -113,11 +113,31 @@ class AmView {
         ?>
         <div class="students">
             <div class="students__head d-flex justify-content-between align-content-between">
-                <h1>Students <span class="badge badge-light students__head--badge">12</span> </h1>
+                <h1>Students <div class="badge badge-light students__head--badge">12</div> </h1>
 
                 <div class="d-flex justify-content-end">
                     <button class="btn btn-primary students__head--button"><i class="fas fa-file-pdf"></i> PDF </button>
-                    <button class="btn btn-primary students__head--button"><i class="fas fa-envelope"></i> Email </button>
+                    <button class="btn btn-primary students__head--button ml-4"><i class="fas fa-envelope"></i> Email </button>
+                    
+                    <div class="input-group ml-4 students__head--group">
+                        <div class="input-group-prepend students__head--prepend">
+                            <span class="input-group-text" >FROM:</span>
+                        </div>
+                        <input type="date" class="form-control students__head--input" v-model="datefrom" placeholder="Date" value="04-24-2019">
+                        <div class="input-group-append students__head--append">
+                            <span class="btn btn-primary students__head--button" ><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                    </div>  
+
+                    <div class="input-group ml-4 students__head--group">
+                        <div class="input-group-prepend students__head--prepend">
+                            <span class="input-group-text" >TO:</span>
+                        </div>
+                        <input type="date" class="form-control students__head--input" v-model="dateto" placeholder="Date" value="04-24-2020">
+                        <div class="input-group-append students__head--append">
+                            <span class="btn btn-primary students__head--button" ><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                    </div>  
                 </div>
             </div>
             <hr class="students__head--hr d-shadow">
@@ -137,7 +157,44 @@ class AmView {
                 </div>
                 <!-- Table body -->
                 <div class="students__table--body">
+                    <!-- Table complex row -->
+                    <div class="students__table--row active">
+                        <!-- Table row short sortable data -->
+                        <div class="students__table--rowshort">
+                            <div class="row__student">      
+                                <div class="row__student--avatar">
+                                    <img src="" alt="">
+                                </div>
+                                Anna K.
+                            </div>
+                            <div class="row__points">  6580</div>
+                            <div class="row__percent"> 
+                                <div class="percentbar" data-percentage="81">
 
+                                </div>
+                            </div>
+                            <div class="row__date">   01-15-2019</div>
+                            <div class="row__login">  87</div>
+                            <div class="row__time">   28:15:00</div>
+                            <div class="row__laststep d-flex flex-column"> 
+                                <div class="title"> Jass Study Unit </div>
+                                <div class="subtitle"> Chapter 7 : Big Band - Jazz Swi </div>
+                            </div>
+                            <div class="row__lastlogin"> 05-17-2020</div>
+                            <div class="row__contact"> 
+                                <button class="btn btn-primary row__button"><i class="fas fa-envelope"></i> Email</button>
+                            </div>
+                        </div>
+                        <!-- Table row extra full data -->
+                        <div class="students__table--rowextra d-flex justify-content-between align-content-between">
+                            <div class="rowextra__quiz">
+                                <div class="title">Quiz Status</div>
+                            </div>
+                            <div class="rowextra__course">
+                                <div class="title">Course Status</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
