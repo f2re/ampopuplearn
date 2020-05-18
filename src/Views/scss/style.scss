@@ -70,6 +70,7 @@
     &__button{
         @include flat-button;
         width: 180px;
+        line-height: 0.5em;
 
         &.active, &:hover{
             background-color: $primary;
@@ -204,7 +205,7 @@
 
         &--row{
             &.active{
-
+                
                 .students__table--rowshort{
                     background-color: $primary;
                     color: white;
@@ -253,9 +254,11 @@
                 &__contact{
                     .row__button{
                         @include flat-button;
-                        padding: 10px;
+                        padding: 5px 10px;
+                        line-height: 0.5em;
                         background-color: white;
                         color: $primary;
+                        font-weight: normal;
                     }
                 }
             }
@@ -265,6 +268,90 @@
             overflow: hidden;
             height: 0px;
             transition: height 0.3s ease;
+            background-color: white;
+            padding: 35px $table-padding-left;
+
+            .rowextra{
+                &__quiz, &__course{
+                    .title{
+                        font-size: 16px;
+                        font-weight: bold;
+                        color: $primary;
+                        margin-bottom:25px;
+                    }
+                    &--chapterhead{
+                        font-size: 16px;
+                        color: $primary-text;
+                        font-weight: normal;
+                        margin-bottom:10px;
+                    }
+                }
+
+                &__quiz{
+                    // padding-left:$table-padding-left;
+                    flex-grow: 1;
+                    margin-right: 30px;
+
+                    &--chapters{
+                        display: grid;
+                        grid-template-rows: 1fr 1fr;
+                        grid-template-columns: 1fr 1fr;
+                        grid-gap: 40px 80px;
+                    }
+                    &--chapter{
+                        font-size: 14px;
+                        color: $primary-text;
+
+                        .colored{
+                            color: $green-end;
+                            text-align: center;
+                        }
+                        &.red .colored{
+                            color: $red-end;
+                        }
+                        &.blue .colored{
+                            color: $blue-end;
+                        }
+                    }
+
+                    &--chapterbody{
+                        display: grid;
+                        grid-gap: 30px;
+                        grid-template-columns: 1fr 2fr 1fr 1fr;
+                    }
+
+                    &--coldata{
+                        padding-right:30px;
+                    }
+                    &--coltitle{
+                        margin-bottom:5px;
+                    }
+                }
+
+                &__course{
+                    min-width: 700px;
+
+                    &--chapterhead{
+                        margin-bottom:5px;
+                    }
+                    &--courses{
+                        display: grid;
+                        grid-template-rows: 1fr;
+                        grid-template-columns: 1fr 1fr;
+                        grid-gap: 20px 20px;
+                    }
+
+                    &--course{
+
+                        font-size: 14px;
+                        color: $primary-text;
+                    }
+
+                    &--coldata{
+                        padding-right: 30px;
+                    }
+                }
+            }
         }
 
     }
@@ -272,6 +359,69 @@
 
  .header{
      &__points{
-         color: $primary-text;
+        color: $primary-text;
      }
  }
+
+/**
+ * 
+ * percent bar section
+ * 
+ */
+.percentbar{
+    height: 18px;  /* Can be anything */
+    position: relative;
+    background: #eeeeee;
+    -moz-border-radius: 18px;
+    -webkit-border-radius: 18px;
+    border-radius: 18px;
+    padding: 2px;
+    width: 100%;
+    margin-right:30px;
+
+    &.active{
+        &:after{
+            color:white; 
+        }
+    }
+
+    &:after{
+        content: attr(data-percentage) "%";
+        position: absolute;
+        right: -30px;
+        top:0px;
+        color: $green-end;
+        font-size: 12px;
+    }
+    
+
+    &.red {
+        &:after{
+            color: $red-end;
+        }
+        &> span {
+            background-color: $red;
+            background-image: linear-gradient(to right, $red, $red-end);
+        }
+    }
+    
+    &.blue {
+        &:after{
+            color: $blue-end;
+        }
+        &> span {
+            background-color: $blue;
+            background-image: linear-gradient(to right, $blue, $blue-end);
+        }
+    }
+    
+    &>span{
+        display: block;
+        height: 14px;
+        border-radius: 14px;
+        background-color: $green;
+        background-image: linear-gradient(to right, $green, $green-end);
+        position: relative;
+        overflow: hidden;
+    }
+}

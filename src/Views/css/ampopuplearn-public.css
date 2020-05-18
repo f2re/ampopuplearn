@@ -11658,6 +11658,7 @@ input[type=text].searchbar__input:selection {
   cursor: pointer;
   margin: 0;
   width: 180px;
+  line-height: 0.5em;
 }
 .ampoptabs__button:hover {
   background-color: #4850a9;
@@ -11849,9 +11850,11 @@ input[type=text].searchbar__input:selection {
   padding: 20px 5px;
   cursor: pointer;
   margin: 0;
-  padding: 10px;
+  padding: 5px 10px;
+  line-height: 0.5em;
   background-color: white;
   color: #4850a9;
+  font-weight: normal;
 }
 .students__table--rowshort .row__contact .row__button:hover {
   background-color: #4850a9;
@@ -11860,10 +11863,130 @@ input[type=text].searchbar__input:selection {
   overflow: hidden;
   height: 0px;
   transition: height 0.3s ease;
+  background-color: white;
+  padding: 35px 20px;
+}
+.students__table--rowextra .rowextra__quiz .title, .students__table--rowextra .rowextra__course .title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #4850a9;
+  margin-bottom: 25px;
+}
+.students__table--rowextra .rowextra__quiz--chapterhead, .students__table--rowextra .rowextra__course--chapterhead {
+  font-size: 16px;
+  color: #a0a1a0;
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+.students__table--rowextra .rowextra__quiz {
+  flex-grow: 1;
+  margin-right: 30px;
+}
+.students__table--rowextra .rowextra__quiz--chapters {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 40px 80px;
+}
+.students__table--rowextra .rowextra__quiz--chapter {
+  font-size: 14px;
+  color: #a0a1a0;
+}
+.students__table--rowextra .rowextra__quiz--chapter .colored {
+  color: #76a93e;
+  text-align: center;
+}
+.students__table--rowextra .rowextra__quiz--chapter.red .colored {
+  color: #d13d2c;
+}
+.students__table--rowextra .rowextra__quiz--chapter.blue .colored {
+  color: #4950a9;
+}
+.students__table--rowextra .rowextra__quiz--chapterbody {
+  display: grid;
+  grid-gap: 30px;
+  grid-template-columns: 1fr 2fr 1fr 1fr;
+}
+.students__table--rowextra .rowextra__quiz--coldata {
+  padding-right: 30px;
+}
+.students__table--rowextra .rowextra__quiz--coltitle {
+  margin-bottom: 5px;
+}
+.students__table--rowextra .rowextra__course {
+  min-width: 700px;
+}
+.students__table--rowextra .rowextra__course--chapterhead {
+  margin-bottom: 5px;
+}
+.students__table--rowextra .rowextra__course--courses {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px 20px;
+}
+.students__table--rowextra .rowextra__course--course {
+  font-size: 14px;
+  color: #a0a1a0;
+}
+.students__table--rowextra .rowextra__course--coldata {
+  padding-right: 30px;
 }
 
 .header__points {
   color: #a0a1a0;
+}
+
+/**
+ * 
+ * percent bar section
+ * 
+ */
+.percentbar {
+  height: 18px;
+  /* Can be anything */
+  position: relative;
+  background: #eeeeee;
+  -moz-border-radius: 18px;
+  -webkit-border-radius: 18px;
+  border-radius: 18px;
+  padding: 2px;
+  width: 100%;
+  margin-right: 30px;
+}
+.percentbar.active:after {
+  color: white;
+}
+.percentbar:after {
+  content: attr(data-percentage) "%";
+  position: absolute;
+  right: -30px;
+  top: 0px;
+  color: #76a93e;
+  font-size: 12px;
+}
+.percentbar.red:after {
+  color: #d13d2c;
+}
+.percentbar.red > span {
+  background-color: #edafab;
+  background-image: linear-gradient(to right, #edafab, #d13d2c);
+}
+.percentbar.blue:after {
+  color: #4950a9;
+}
+.percentbar.blue > span {
+  background-color: #60abf7;
+  background-image: linear-gradient(to right, #60abf7, #4950a9);
+}
+.percentbar > span {
+  display: block;
+  height: 14px;
+  border-radius: 14px;
+  background-color: #acea69;
+  background-image: linear-gradient(to right, #acea69, #76a93e);
+  position: relative;
+  overflow: hidden;
 }
 
 /*# sourceMappingURL=ampopuplearn-public.css.map */
