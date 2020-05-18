@@ -152,6 +152,7 @@
             }
         }
         &--input{
+            font-family: $primary-font-family;
             background-color: transparent;
             border: 0px;
             color: $primary-text;
@@ -162,5 +163,115 @@
             border-top: 1px solid $primary-text;
             border-bottom: 1px solid $primary-text;
         }
+
+        &--hr{
+            width: calc(100% - 40px);
+            border: 1px solid #f1f2ee;
+            box-shadow: 0 5px 10px rgba(241,242,238,1); /* Параметры тени */
+            margin-left:20px !important;
+        }
+
+     }
+
+     /**
+      * TABLE sections
+      */
+    &__table{
+        width: 100%;
+
+        &--header{
+            display: grid;
+            grid-template-areas: "header__student header__points header__percent header__date header__login header__time header__laststep header__lastlogin header__contact";
+            grid-template-columns: 140px 140px 1fr 140px 160px 160px 240px 240px 140px; 
+            margin: 0;
+
+            
+
+            &>div{
+                padding:  15px $table-padding-left;
+
+                &.active span{
+                    display:inline-block;
+                }
+                span{
+                    display: none;
+                    margin-left:5px;
+                }
+            }
+
+            
+        }
+
+        &--row{
+            &.active{
+
+                .students__table--rowshort{
+                    background-color: $primary;
+                    color: white;
+                }
+
+                .students__table--rowextra{
+                    height: auto;
+                }
+
+            }
+        }
+        
+        &--rowshort{
+            display: grid;
+            grid-template-areas: "row__student row__points row__percent row__date row__login row__time row__laststep row__lastlogin row__contact";
+            grid-template-columns: 140px 140px 1fr 140px 160px 160px 240px 240px 140px; 
+            margin: 0;
+
+            .row{
+                &__student, 
+                &__points,
+                &__percent,
+                &__date,
+                &__login,
+                &__time,
+                &__laststep,
+                &__lastlogin,
+                &__contact {
+                    padding: 15px $table-padding-left;
+                    font-size: 12px;
+                    display: flex;
+                    align-content: center;
+                    justify-content: start;
+                    align-items: center;
+                    justify-items: center;
+                }
+                &__student{
+                    &--avatar{
+                        border-radius: 50%;
+                        text-align: center;
+                        overflow: hidden;
+                        margin-right:10px;
+                    }
+                }
+
+                &__contact{
+                    .row__button{
+                        @include flat-button;
+                        padding: 10px;
+                        background-color: white;
+                        color: $primary;
+                    }
+                }
+            }
+        }
+        
+        &--rowextra{
+            overflow: hidden;
+            height: 0px;
+            transition: height 0.3s ease;
+        }
+
+    }
+ }
+
+ .header{
+     &__points{
+         color: $primary-text;
      }
  }

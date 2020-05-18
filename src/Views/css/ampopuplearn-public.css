@@ -11671,6 +11671,9 @@ input[type=text].searchbar__input:selection {
  */
 .students {
   background-color: white;
+  /**
+   * TABLE sections
+   */
 }
 .students__head {
   padding: 20px;
@@ -11771,6 +11774,7 @@ input[type=text].searchbar__input:selection {
   margin: 0;
 }
 .students__head--input {
+  font-family: "Montserrat";
   background-color: transparent;
   border: 0px;
   color: #a0a1a0;
@@ -11780,6 +11784,86 @@ input[type=text].searchbar__input:selection {
   padding: 5px 0px;
   border-top: 1px solid #a0a1a0;
   border-bottom: 1px solid #a0a1a0;
+}
+.students__head--hr {
+  width: calc(100% - 40px);
+  border: 1px solid #f1f2ee;
+  box-shadow: 0 5px 10px #f1f2ee;
+  /* Параметры тени */
+  margin-left: 20px !important;
+}
+.students__table {
+  width: 100%;
+}
+.students__table--header {
+  display: grid;
+  grid-template-areas: "header__student header__points header__percent header__date header__login header__time header__laststep header__lastlogin header__contact";
+  grid-template-columns: 140px 140px 1fr 140px 160px 160px 240px 240px 140px;
+  margin: 0;
+}
+.students__table--header > div {
+  padding: 15px 20px;
+}
+.students__table--header > div.active span {
+  display: inline-block;
+}
+.students__table--header > div span {
+  display: none;
+  margin-left: 5px;
+}
+.students__table--row.active .students__table--rowshort {
+  background-color: #4850a9;
+  color: white;
+}
+.students__table--row.active .students__table--rowextra {
+  height: auto;
+}
+.students__table--rowshort {
+  display: grid;
+  grid-template-areas: "row__student row__points row__percent row__date row__login row__time row__laststep row__lastlogin row__contact";
+  grid-template-columns: 140px 140px 1fr 140px 160px 160px 240px 240px 140px;
+  margin: 0;
+}
+.students__table--rowshort .row__student, .students__table--rowshort .row__points, .students__table--rowshort .row__percent, .students__table--rowshort .row__date, .students__table--rowshort .row__login, .students__table--rowshort .row__time, .students__table--rowshort .row__laststep, .students__table--rowshort .row__lastlogin, .students__table--rowshort .row__contact {
+  padding: 15px 20px;
+  font-size: 12px;
+  display: flex;
+  align-content: center;
+  justify-content: start;
+  align-items: center;
+  justify-items: center;
+}
+.students__table--rowshort .row__student--avatar {
+  border-radius: 50%;
+  text-align: center;
+  overflow: hidden;
+  margin-right: 10px;
+}
+.students__table--rowshort .row__contact .row__button {
+  background-color: #9397ca;
+  text-transform: none;
+  text-decoration: none;
+  font-size: 14px;
+  border: 0px;
+  border-radius: 0px;
+  padding: 20px 5px;
+  cursor: pointer;
+  margin: 0;
+  padding: 10px;
+  background-color: white;
+  color: #4850a9;
+}
+.students__table--rowshort .row__contact .row__button:hover {
+  background-color: #4850a9;
+}
+.students__table--rowextra {
+  overflow: hidden;
+  height: 0px;
+  transition: height 0.3s ease;
+}
+
+.header__points {
+  color: #a0a1a0;
 }
 
 /*# sourceMappingURL=ampopuplearn-public.css.map */

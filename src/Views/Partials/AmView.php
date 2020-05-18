@@ -140,6 +140,7 @@ class AmView {
                     </div>  
                 </div>
             </div>
+
             <hr class="students__head--hr d-shadow">
 
             <div class="students__table">
@@ -163,7 +164,7 @@ class AmView {
                         <div class="students__table--rowshort">
                             <div class="row__student">      
                                 <div class="row__student--avatar">
-                                    <img src="" alt="">
+                                    <img src="https://via.placeholder.com/30" alt="">
                                 </div>
                                 Anna K.
                             </div>
