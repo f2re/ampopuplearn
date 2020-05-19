@@ -215,7 +215,20 @@
                     height: auto;
                 }
 
+                .students__head--hr{
+                    display: block;
+                }
+
+                .students__table--rowextra{
+                    padding: 35px $table-padding-left;
+                }
+
             }
+
+            .students__head--hr{
+                display: none;
+            }
+            
         }
         
         &--rowshort{
@@ -267,9 +280,10 @@
         &--rowextra{
             overflow: hidden;
             height: 0px;
-            transition: height 0.3s ease;
+            transition: all 0.3s ease;
             background-color: white;
-            padding: 35px $table-padding-left;
+            padding: 0px;
+            
 
             .rowextra{
                 &__quiz, &__course{

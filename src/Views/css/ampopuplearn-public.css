@@ -11819,6 +11819,15 @@ input[type=text].searchbar__input:selection {
 .students__table--row.active .students__table--rowextra {
   height: auto;
 }
+.students__table--row.active .students__head--hr {
+  display: block;
+}
+.students__table--row.active .students__table--rowextra {
+  padding: 35px 20px;
+}
+.students__table--row .students__head--hr {
+  display: none;
+}
 .students__table--rowshort {
   display: grid;
   grid-template-areas: "row__student row__points row__percent row__date row__login row__time row__laststep row__lastlogin row__contact";
@@ -11862,9 +11871,9 @@ input[type=text].searchbar__input:selection {
 .students__table--rowextra {
   overflow: hidden;
   height: 0px;
-  transition: height 0.3s ease;
+  transition: all 0.3s ease;
   background-color: white;
-  padding: 35px 20px;
+  padding: 0px;
 }
 .students__table--rowextra .rowextra__quiz .title, .students__table--rowextra .rowextra__course .title {
   font-size: 16px;

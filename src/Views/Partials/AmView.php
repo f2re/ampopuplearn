@@ -381,6 +381,230 @@ class AmView {
                         </div>
                         <hr class="students__head--hr d-shadow">
                     </div>
+
+                    <!-- Table complex row -->
+                    <div class="students__table--row">
+                        <!-- Table row short sortable data -->
+                        <div class="students__table--rowshort">
+                            <div class="row__student">      
+                                <div class="row__student--avatar">
+                                    <img src="https://via.placeholder.com/30" alt="">
+                                </div>
+                                Anna K.
+                            </div>
+                            <div class="row__points">  6580</div>
+                            <div class="row__percent"> 
+                                <div class="percentbar active" data-percentage="81">
+                                    <span style="width: 81%"></span>
+                                </div>
+                            </div>
+                            <div class="row__date">   01-15-2019</div>
+                            <div class="row__login">  87</div>
+                            <div class="row__time">   28:15:00</div>
+                            <div class="row__laststep d-flex flex-column"> 
+                                <div class="title"> Jass Study Unit </div>
+                                <div class="subtitle"> Chapter 7 : Big Band - Jazz Swi </div>
+                            </div>
+                            <div class="row__lastlogin"> 05-17-2020</div>
+                            <div class="row__contact"> 
+                                <button class="btn btn-primary row__button"><i class="fas fa-envelope"></i> Email</button>
+                            </div>
+                        </div>
+                        <!-- Table row extra full data -->
+                        <div class="students__table--rowextra d-flex justify-content-between align-content-between">
+                            <div class="rowextra__quiz">
+                                <div class="title">Quiz Status</div>
+                                <div class="rowextra__quiz--chapters">
+
+                                    <div class="rowextra__quiz--chapter">
+                                        <div class="rowextra__quiz--chapterhead">Chapter 1 Quiz</div>
+                                        <div class="rowextra__quiz--chapterbody">
+                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
+                                                <div class="rowextra__quiz--coltitle">Attemts</div>
+                                                <div class="rowextra__quiz--coldata colored">7</div>
+                                            </div>
+                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
+                                                <div class="rowextra__quiz--coltitle">Last Score (%)</div>
+                                                <div class="rowextra__quiz--coldata colored">
+                                                    <div class="percentbar  green " data-percentage="78">
+                                                        <span style="width: 78%"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
+                                                <div class="rowextra__quiz--coltitle">Date</div>
+                                                <div class="rowextra__quiz--coldata colored">3-2-2020</div>
+                                            </div>
+                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
+                                                <div class="rowextra__quiz--coltitle">Duration</div>
+                                                <div class="rowextra__quiz--coldata colored">1:25:34</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="rowextra__quiz--chapter">
+                                        <div class="rowextra__quiz--chapterhead">Chapter 1 Quiz</div>
+                                        <div class="rowextra__quiz--chapterbody">
+                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
+                                                <div class="rowextra__quiz--coltitle">Attemts</div>
+                                                <div class="rowextra__quiz--coldata colored">7</div>
+                                            </div>
+                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
+                                                <div class="rowextra__quiz--coltitle">Last Score (%)</div>
+                                                <div class="rowextra__quiz--coldata colored">
+                                                    <div class="percentbar green " data-percentage="78">
+                                                        <span style="width: 78%"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
+                                                <div class="rowextra__quiz--coltitle">Date</div>
+                                                <div class="rowextra__quiz--coldata colored">3-2-2020</div>
+                                            </div>
+                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
+                                                <div class="rowextra__quiz--coltitle">Duration</div>
+                                                <div class="rowextra__quiz--coldata colored">1:25:34</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="rowextra__quiz--chapter red">
+                                        <div class="rowextra__quiz--chapterhead">Chapter 1 Quiz</div>
+                                        <div class="rowextra__quiz--chapterbody">
+                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
+                                                <div class="rowextra__quiz--coltitle">Attemts</div>
+                                                <div class="rowextra__quiz--coldata colored">7</div>
+                                            </div>
+                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
+                                                <div class="rowextra__quiz--coltitle">Last Score (%)</div>
+                                                <div class="rowextra__quiz--coldata colored">
+                                                    <div class="percentbar red " data-percentage="78">
+                                                        <span style="width: 78%"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
+                                                <div class="rowextra__quiz--coltitle">Date</div>
+                                                <div class="rowextra__quiz--coldata colored">3-2-2020</div>
+                                            </div>
+                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
+                                                <div class="rowextra__quiz--coltitle">Duration</div>
+                                                <div class="rowextra__quiz--coldata colored">1:25:34</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="rowextra__quiz--chapter red">
+                                        <div class="rowextra__quiz--chapterhead">Chapter 1 Quiz</div>
+                                        <div class="rowextra__quiz--chapterbody">
+                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
+                                                <div class="rowextra__quiz--coltitle">Attemts</div>
+                                                <div class="rowextra__quiz--coldata colored">7</div>
+                                            </div>
+                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
+                                                <div class="rowextra__quiz--coltitle">Last Score (%)</div>
+                                                <div class="rowextra__quiz--coldata colored">
+                                                    <div class="percentbar red " data-percentage="78">
+                                                        <span style="width: 78%"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
+                                                <div class="rowextra__quiz--coltitle">Date</div>
+                                                <div class="rowextra__quiz--coldata colored">3-2-2020</div>
+                                            </div>
+                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
+                                                <div class="rowextra__quiz--coltitle">Duration</div>
+                                                <div class="rowextra__quiz--coldata colored">1:25:34</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="rowextra__course">
+                                <div class="title">Course Status</div>
+                                <div class="rowextra__course--courses ">
+
+                                    <div class="rowextra__course--course ">
+                                        <div class="rowextra__course--chapterhead">Course 1</div>
+                                        <div class="rowextra__course--coursebody">
+                                            <div class="rowextra__course--coursecol d-flex flex-column">
+                                                <div class="rowextra__course--coldata ">
+                                                    <div class="percentbar blue" data-percentage="81">
+                                                        <span style="width: 81%"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="rowextra__course--course ">
+                                        <div class="rowextra__course--chapterhead">Course 1</div>
+                                        <div class="rowextra__course--coursebody">
+                                            <div class="rowextra__course--coursecol d-flex flex-column">
+                                                <div class="rowextra__course--coldata ">
+                                                    <div class="percentbar blue" data-percentage="81">
+                                                        <span style="width: 81%"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="rowextra__course--course ">
+                                        <div class="rowextra__course--chapterhead">Course 1</div>
+                                        <div class="rowextra__course--coursebody">
+                                            <div class="rowextra__course--coursecol d-flex flex-column">
+                                                <div class="rowextra__course--coldata ">
+                                                    <div class="percentbar blue" data-percentage="81">
+                                                        <span style="width: 81%"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="rowextra__course--course ">
+                                        <div class="rowextra__course--chapterhead">Course 1</div>
+                                        <div class="rowextra__course--coursebody">
+                                            <div class="rowextra__course--coursecol d-flex flex-column">
+                                                <div class="rowextra__course--coldata ">
+                                                    <div class="percentbar blue" data-percentage="81">
+                                                        <span style="width: 81%"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="rowextra__course--course ">
+                                        <div class="rowextra__course--chapterhead">Course 1</div>
+                                        <div class="rowextra__course--coursebody">
+                                            <div class="rowextra__course--coursecol d-flex flex-column">
+                                                <div class="rowextra__course--coldata ">
+                                                    <div class="percentbar blue" data-percentage="81">
+                                                        <span style="width: 81%"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="rowextra__course--course ">
+                                        <div class="rowextra__course--chapterhead">Course 1</div>
+                                        <div class="rowextra__course--coursebody">
+                                            <div class="rowextra__course--coursecol d-flex flex-column">
+                                                <div class="rowextra__course--coldata ">
+                                                    <div class="percentbar blue" data-percentage="81">
+                                                        <span style="width: 81%"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="students__head--hr d-shadow">
+                    </div>
                 </div>
 
             </div>
