@@ -11626,7 +11626,7 @@ readers do not read off random characters that represent icons */
   margin-bottom: 30px;
 }
 .searchbar__prepend .input-group-text {
-  color: #a0a1a0;
+  color: #9a9d9f;
   background-color: unset;
   padding: 0;
   border: none;
@@ -11648,7 +11648,7 @@ input[type=text].searchbar__input:selection {
  * Tabs section
  */
 .ampoptabs__button {
-  background-color: #9397ca;
+  background-color: #8185c2;
   text-transform: none;
   text-decoration: none;
   font-size: 14px;
@@ -11661,10 +11661,10 @@ input[type=text].searchbar__input:selection {
   line-height: 0.5em;
 }
 .ampoptabs__button:hover {
-  background-color: #4850a9;
+  background-color: #34399d;
 }
 .ampoptabs__button.active, .ampoptabs__button:hover {
-  background-color: #4850a9;
+  background-color: #34399d;
 }
 
 /**
@@ -11678,12 +11678,12 @@ input[type=text].searchbar__input:selection {
 }
 .students__head {
   padding: 20px;
-  color: #4850a9;
+  color: #34399d;
   height: 80px;
 }
 .students__head--badge {
   margin-left: 20px;
-  background-color: #4850a9;
+  background-color: #34399d;
   color: white !important;
   font-weight: bold;
   height: 27px;
@@ -11698,7 +11698,7 @@ input[type=text].searchbar__input:selection {
 .students__head h1 {
   width: auto;
   margin: 0px !important;
-  color: #4850a9 !important;
+  color: #34399d !important;
   font-size: 26px !important;
   font-weight: bold !important;
   line-height: normal !important;
@@ -11708,9 +11708,9 @@ input[type=text].searchbar__input:selection {
   background-color: transparent;
   text-transform: uppercase;
   text-decoration: none;
-  color: #4850a9;
+  color: #34399d;
   font-size: 14px;
-  border: 1px solid #a0a1a0;
+  border: 1px solid #9a9d9f;
   border-radius: 5px;
   padding: 5px 16px;
   cursor: pointer;
@@ -11727,26 +11727,26 @@ input[type=text].searchbar__input:selection {
   margin-right: 12px;
 }
 .students__head--button:hover {
-  background-color: #4850a9;
-  border: 1px solid #a0a1a0;
+  background-color: #34399d;
+  border: 1px solid #9a9d9f;
 }
 .students__head--group {
-  color: #4850a9;
+  color: #34399d;
   font-size: 14px;
 }
 .students__head--prepend span {
   background-color: transparent;
-  color: #4850a9;
+  color: #34399d;
   font-size: 14px;
   font-weight: bold;
-  border-top: 1px solid #a0a1a0;
-  border-left: 1px solid #a0a1a0;
-  border-bottom: 1px solid #a0a1a0;
+  border-top: 1px solid #9a9d9f;
+  border-left: 1px solid #9a9d9f;
+  border-bottom: 1px solid #9a9d9f;
   border-right: 0px;
   padding-left: 17px;
 }
 .students__head--append span {
-  background-color: #9397ca;
+  background-color: #8185c2;
   text-transform: none;
   text-decoration: none;
   font-size: 14px;
@@ -11757,14 +11757,14 @@ input[type=text].searchbar__input:selection {
   margin: 0;
   padding: 10px;
   color: white;
-  background-color: #4850a9;
+  background-color: #34399d;
   width: 35px;
   text-align: center;
   display: block;
   line-height: 18px;
 }
 .students__head--append span:hover {
-  background-color: #4850a9;
+  background-color: #34399d;
 }
 .students__head--append span:hover {
   border: 0px;
@@ -11778,13 +11778,13 @@ input[type=text].searchbar__input:selection {
   font-family: "Montserrat";
   background-color: transparent;
   border: 0px;
-  color: #a0a1a0;
+  color: #9a9d9f;
   font-size: 14px;
   font-weight: bold;
   width: 100px;
   padding: 5px 0px;
-  border-top: 1px solid #a0a1a0;
-  border-bottom: 1px solid #a0a1a0;
+  border-top: 1px solid #9a9d9f;
+  border-bottom: 1px solid #9a9d9f;
 }
 .students__head--hr {
   width: calc(100% - 40px);
@@ -11813,7 +11813,7 @@ input[type=text].searchbar__input:selection {
   margin-left: 5px;
 }
 .students__table--row.active .students__table--rowshort {
-  background-color: #4850a9;
+  background-color: #34399d;
   color: white;
 }
 .students__table--row.active .students__table--rowextra {
@@ -11824,6 +11824,14 @@ input[type=text].searchbar__input:selection {
 }
 .students__table--row.active .students__table--rowextra {
   padding: 35px 20px;
+}
+.students__table--row.active .students__table--rowshort .row__button {
+  background-color: white !important;
+  color: #34399d !important;
+}
+.students__table--row.active .students__table--rowshort .row__button:hover {
+  color: white !important;
+  background-color: #34399d !important;
 }
 .students__table--row .students__head--hr {
   display: none;
@@ -11843,6 +11851,10 @@ input[type=text].searchbar__input:selection {
   align-items: center;
   justify-items: center;
 }
+.students__table--rowshort .row__points {
+  font-size: 14px;
+  font-weight: bold;
+}
 .students__table--rowshort .row__student--avatar {
   border-radius: 50%;
   text-align: center;
@@ -11850,7 +11862,7 @@ input[type=text].searchbar__input:selection {
   margin-right: 10px;
 }
 .students__table--rowshort .row__contact .row__button {
-  background-color: #9397ca;
+  background-color: #8185c2;
   text-transform: none;
   text-decoration: none;
   font-size: 14px;
@@ -11861,12 +11873,16 @@ input[type=text].searchbar__input:selection {
   margin: 0;
   padding: 5px 10px;
   line-height: 0.5em;
-  background-color: white;
-  color: #4850a9;
+  background-color: #34399d;
+  color: white;
   font-weight: normal;
 }
 .students__table--rowshort .row__contact .row__button:hover {
-  background-color: #4850a9;
+  background-color: #34399d;
+}
+.students__table--rowshort .row__contact .row__button:hover {
+  color: #34399d !important;
+  background-color: white !important;
 }
 .students__table--rowextra {
   overflow: hidden;
@@ -11878,12 +11894,12 @@ input[type=text].searchbar__input:selection {
 .students__table--rowextra .rowextra__quiz .title, .students__table--rowextra .rowextra__course .title {
   font-size: 16px;
   font-weight: bold;
-  color: #4850a9;
+  color: #34399d;
   margin-bottom: 25px;
 }
 .students__table--rowextra .rowextra__quiz--chapterhead, .students__table--rowextra .rowextra__course--chapterhead {
   font-size: 16px;
-  color: #a0a1a0;
+  color: #9a9d9f;
   font-weight: normal;
   margin-bottom: 10px;
 }
@@ -11899,17 +11915,17 @@ input[type=text].searchbar__input:selection {
 }
 .students__table--rowextra .rowextra__quiz--chapter {
   font-size: 14px;
-  color: #a0a1a0;
+  color: #9a9d9f;
 }
 .students__table--rowextra .rowextra__quiz--chapter .colored {
-  color: #76a93e;
+  color: #499e24;
   text-align: center;
 }
 .students__table--rowextra .rowextra__quiz--chapter.red .colored {
-  color: #d13d2c;
+  color: #ec2925;
 }
 .students__table--rowextra .rowextra__quiz--chapter.blue .colored {
-  color: #4950a9;
+  color: #34399d;
 }
 .students__table--rowextra .rowextra__quiz--chapterbody {
   display: grid;
@@ -11936,14 +11952,14 @@ input[type=text].searchbar__input:selection {
 }
 .students__table--rowextra .rowextra__course--course {
   font-size: 14px;
-  color: #a0a1a0;
+  color: #9a9d9f;
 }
 .students__table--rowextra .rowextra__course--coldata {
   padding-right: 30px;
 }
 
 .header__points {
-  color: #a0a1a0;
+  color: #9a9d9f;
 }
 
 /**
@@ -11971,29 +11987,29 @@ input[type=text].searchbar__input:selection {
   position: absolute;
   right: -30px;
   top: 0px;
-  color: #76a93e;
+  color: #499e24;
   font-size: 12px;
 }
 .percentbar.red:after {
-  color: #d13d2c;
+  color: #ec2925;
 }
 .percentbar.red > span {
-  background-color: #edafab;
-  background-image: linear-gradient(to right, #edafab, #d13d2c);
+  background-color: #fe9d9b;
+  background-image: linear-gradient(to right, #fe9d9b, #ec2925);
 }
 .percentbar.blue:after {
-  color: #4950a9;
+  color: #34399d;
 }
 .percentbar.blue > span {
-  background-color: #60abf7;
-  background-image: linear-gradient(to right, #60abf7, #4950a9);
+  background-color: #109bf8;
+  background-image: linear-gradient(to right, #109bf8, #34399d);
 }
 .percentbar > span {
   display: block;
   height: 14px;
   border-radius: 14px;
-  background-color: #acea69;
-  background-image: linear-gradient(to right, #acea69, #76a93e);
+  background-color: #7deb4d;
+  background-image: linear-gradient(to right, #7deb4d, #499e24);
   position: relative;
   overflow: hidden;
 }

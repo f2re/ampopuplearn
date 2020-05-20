@@ -223,6 +223,15 @@
                     padding: 35px $table-padding-left;
                 }
 
+                .students__table--rowshort .row__button{
+                    background-color: white!important;
+                    color: $primary!important;
+                    &:hover{
+                        color:white!important;
+                        background-color:$primary!important;
+                    }
+                }
+
             }
 
             .students__head--hr{
@@ -255,6 +264,10 @@
                     align-items: center;
                     justify-items: center;
                 }
+                &__points{
+                    font-size: 14px;
+                    font-weight: bold;
+                }
                 &__student{
                     &--avatar{
                         border-radius: 50%;
@@ -269,9 +282,14 @@
                         @include flat-button;
                         padding: 5px 10px;
                         line-height: 0.5em;
-                        background-color: white;
-                        color: $primary;
+                        background-color: $primary;
+                        color: white;
                         font-weight: normal;
+
+                        &:hover{
+                            color:$primary!important;
+                            background-color:white!important;
+                        }
                     }
                 }
             }

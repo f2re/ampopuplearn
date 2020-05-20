@@ -621,8 +621,6 @@ class AmView {
      */
     private function print_end(){
         ?>
-            <div class="end">end</div>
-
             </div>
         <?php
     }
