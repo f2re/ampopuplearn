@@ -19,6 +19,7 @@ use AmpopupLearn\Pub\Pub;
 use AmpopupLearn\Admin\Admin;
 use AmpopupLearn\Views\View;
 use AmpopupLearn\Views\Partials\AmView;
+use AmpopupLearn\Helpers\PostHelper;
 // use AmpopupLearn\Inc\Deactivator;
 // use AmpopupLearn\Inc\Ampopuplearn;
 
@@ -173,8 +174,15 @@ class Ampopuplearn {
 	private function define_shortcodes() {
 		// add shortcode Certifications is the user added certifications
 		$am_view = new AmView();
-		// $this->loader->add_action( 'wp_enqueue_style', $am_view, 'enqueue_styles' );
-		// $this->loader->add_action( 'wp_enqueue_scripts', $am_view, 'enqueue_scripts' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $am_view, 'enqueue_styles' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $am_view, 'enqueue_scripts' );
+
+		add_action( 'wp_ajax_ampopmusic_getreport', [$am_view, 'get_report'] );
+		// $this->loader->add_action( 'wp_ajax_ampopmusic_getreport', 'AmpopupLearn\\Helpers\\PostHelper', 'get_report' );
+
+		// $this->loader->add_apiroute( [$am_view,'register_api'] );
+		// add_action('rest_api_init', [$am_view,'register_api'] );
+
 		$this->loader->add_shortcode( 'ampopmusiclearn_init', [$am_view,'run'] );
 	}
 
