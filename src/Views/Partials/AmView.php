@@ -29,206 +29,11 @@ class AmView {
      * @return void
      */
     public function get_report(){
-        $transient_data = array();
-
-        $data_headers						    	=	array();
-        $data_headers['user_id']  					= 	array( 
-                                                                    'label'		=>	esc_html__( 'user_id', 'learndash' ),
-                                                                    'default'	=>	'',
-                                                                    'display'	=>	array( $this, 'report_column' )
-                                                                );
-        $data_headers['user_name'] 					= 	array( 
-                                                                    'label'		=>	esc_html__( 'name', 'learndash' ),
-                                                                    'default'	=>	'',
-                                                                    'display'	=>	array( $this, 'report_column' )
-                                                                );
-
-        $data_headers['user_email'] 					=	array( 
-                                                                    'label'		=>	esc_html__( 'email', 'learndash' ),
-                                                                    'default'	=>	'',
-                                                                    'display'	=>	array( $this, 'report_column' )
-                                                                );
-                                                                
-        $data_headers['course_id'] 					= 	array( 
-                                                                    'label'		=>	esc_html__( 'course_id', 'learndash' ),
-                                                                    'default'	=>	'',
-                                                                    'display'	=>	array( $this, 'report_column' )
-                                                                );
-        $data_headers['course_title'] 				= 	array( 
-                                                                    'label'		=>	esc_html__( 'course_title', 'learndash' ),
-                                                                    'default'	=>	'',
-                                                                    'display'	=>	array( $this, 'report_column' )
-                                                                );
-
-        $data_headers['course_steps_completed'] 		= 	array( 
-                                                                    'label'		=>	esc_html__( 'steps_completed', 'learndash' ),
-                                                                    'default'	=>	'',
-                                                                    'display'	=>	array( $this, 'report_column' )
-                                                                );
-        $data_headers['course_steps_total'] 			= 	array( 
-                                                                    'label'		=>	esc_html__( 'steps_total', 'learndash' ),
-                                                                    'default'	=>	'',
-                                                                    'display'	=>	array( $this, 'report_column' )
-                                                                );
-        $data_headers['course_completed'] 			= 	array( 
-                                                                    'label'		=>	esc_html__( 'course_completed', 'learndash' ),
-                                                                    'default'	=>	'',
-                                                                    'display'	=>	array( $this, 'report_column' )
-                                                                );
-        $data_headers['course_completed_on']			=	array( 
-                                                                    'label'		=>	esc_html__( 'course_completed_on', 'learndash' ),
-                                                                    'default'	=>	'',
-                                                                    'display'	=>	array( $this, 'report_column' )
-                                                                );
-        $data=[];
-        // $response = \rest_ensure_response( $data ); 
-        
-
-        if ( ( isset( $data['filters'] ) ) && ( !empty( $data['filters'] ) ) ) {
-            $transient_data = $query = \wp_parse_args( $transient_data, $data['filters'] );                                        
-        } else {
-        
-            $transient_data['activity_status'] =	array('NOT_STARTED' , 'IN_PROGRESS', 'COMPLETED');
-            
-            if ( ( isset( $data['group_id'] ) ) && ( !empty( $data['group_id'] ) ) ) {
-                $transient_data['users_ids'] = \learndash_get_groups_user_ids( intval( $data['group_id'] ) );
-                $transient_data['posts_ids'] = \learndash_group_enrolled_courses( intval( $data['group_id'] ) );
-            } else {
-                $transient_data['posts_ids'] = '';
-                $transient_data['users_ids'] = \learndash_get_report_user_ids();
-            }
-            $transient_data['activity_status'] = array('NOT_STARTED', 'IN_PROGRESS', 'COMPLETED');
-        }
-
-        $data['report_download_link'] = $transient_data['report_url'];
-        $data['total_count']          = $transient_data['total_users'];
-        $data['transient_data']       = $transient_data;
-        $data['get_current_user_id']  = \get_current_user_id();
-        
-        $transient_data['total_users'] = count( $transient_data['users_ids'] );
-        
-        
-        if ( !empty( $transient_data['users_ids'] ) ) {
-                                
-            // If we are doing the initial 'init' then we return so we can show the progress meter.			
-            if ( $_DOING_INIT != true) {
-            
-                $course_query_args = array(
-                    'orderby'		=>	'title',
-                    'order'			=>	'ASC',
-                    'nopaging'		=>	true
-                );
-
-                $activity_query_args = array(
-                    'post_types' 		=> 	'sfwd-courses',
-                    'activity_types'	=>	'course',
-                    'activity_status'	=>	$transient_data['activity_status'],
-                    'orderby_order'		=>	'users.ID, posts.post_title',
-                    'date_format'		=>	'F j, Y H:i:s',
-                    'per_page'			=>	''
-                );
-                
-                $course_progress_data = array();
-                
-                foreach( $transient_data['users_ids'] as $user_id_idx => $user_id ) {
-            
-                    unset( $transient_data['users_ids'][$user_id_idx] );
-                
-                    $report_user = \get_user_by('id', $user_id);
-                    if ( $report_user !== false ) {
-                        if ( ( isset( $transient_data['course_ids'] ) ) && ( !empty( $transient_data['course_ids'] ) ) ) {
-                            $post_ids = $transient_data['course_ids'];
-                            
-                        } else if ( ( isset( $transient_data['posts_ids'] ) ) && ( !empty( $transient_data['posts_ids'] ) ) ) {
-                            $post_ids = $transient_data['posts_ids'];
-
-                        } else {
-                            $post_ids = \learndash_user_get_enrolled_courses( intval( $user_id ), $course_query_args, true );
-                        }
-
-
-                        if ( !empty( $post_ids ) ) {
-
-                            $activity_query_args['user_ids'] = array( $user_id );
-                            $activity_query_args['post_ids'] = $post_ids;
-                        
-                            $user_courses_reports = \learndash_reports_get_activity( $activity_query_args );
-                            
-                            if ( !empty( $user_courses_reports['results'] ) ) {
-                                foreach( $user_courses_reports['results'] as $result ) {											
-                                    // $row = array();
-                                    
-                                    // foreach( $data_headers as $header_key => $header_data ) {
-                                    
-                                    //     if ( ( isset( $header_data['display'] ) ) && ( !empty( $header_data['display'] ) ) ) {
-                                    //         $row[$header_key] = \call_user_func_array( $header_data['display'], array(
-                                    //                 'header_value'	=>	$header_data['default'],
-                                    //                 'header_key'	=>	$header_key, 
-                                    //                 'item' 			=> 	$result, 
-                                    //                 'report_user' 	=> 	$report_user,
-                                    //             ) 
-                                    //         );
-                                    //     } else if ( ( isset( $header_data['default'] ) ) && ( !empty( $header_data['default'] ) ) ) {
-                                    //         $row[$header_key] = $header_data['default'];
-                                    //     } else {
-                                    //         $row[$header_key] = '';
-                                    //     }
-                                    // }
-                                    
-                                    // if ( !empty($row ) ) {
-                                        // $course_progress_data[] = $row;
-                                        $course_progress_data[] = $result;
-                                    // }
-                                }
-                            } else {
-                                
-                                if ( ( is_array( $transient_data['activity_status'] ) ) 
-                                    && ( count( $transient_data['activity_status'] ) > 1 ) 
-                                    && ( in_array('NOT_STARTED', $transient_data['activity_status'] ) ) ) {
-                                    
-                                    // $row = array();
-                            
-                                    // foreach( $data_headers as $header_key => $header_data ) {
-                                
-                                    //     if ( ( isset( $header_data['display'] ) ) && ( !empty( $header_data['display'] ) ) ) {
-                                    //         $row[$header_key] = \call_user_func_array( $header_data['display'], array(
-                                    //                 'header_value'	=>	$header_data['default'],
-                                    //                 'header_key'	=>	$header_key,
-                                    //                 'item' 			=> 	new stdClass(), 
-                                    //                 'report_user' 	=> 	$report_user,
-                                    //             ) 
-                                    //         );
-                                    //     } else if ( ( isset( $header_data['default'] ) ) && ( !empty( $header_data['default'] ) ) ) {
-                                    //         $row[$header_key] = $header_data['default'];
-                                    //     } else {
-                                    //         $row[$header_key] = '';
-                                    //     }
-                                    // }
-
-                                    // if ( !empty($row ) ) {
-                                        // $course_progress_data[] = $row;
-                                        $course_progress_data[] = $report_user;
-                                    // }
-                                }
-                            }
-                        }
-                    }
-                       
-                }
-                   
-                // if ( !empty( $course_progress_data ) ) {
-                    $data['progress'] = $course_progress_data;
-                // }
-            } 
-            
-            $data['result_count'] 		= 	$data['total_count'] - count( $transient_data['users_ids'] );
-            $data['progress_percent'] 	= 	( $data['result_count'] / $data['total_count'] ) * 100;
-            // $data['progress_label']		= 	sprintf( esc_html_x('%1$d of %2$s Users', 'placeholders: result count, total count', 'learndash'), $data['result_count'], $data['total_count']);
-        }
- 
+        $category_id = 123;
+        $data = PostHelper::get_category_students($category_id);
         // $response = \rest_ensure_response( $data ); 
         // return $response;
-        wp_send_json( $data );
+        wp_send_json([ 'data'=> $data, 'category_id'=>$category_id] );
         die();
     }
 
@@ -241,7 +46,7 @@ class AmView {
         register_rest_route( 'ampopmusic/v1', '/report', array(
             'methods'  => 'POST',
             'callback' => function(){
-                return PostHelper::get_report();
+                return PostHelper::get_category_students();
             }
         ) );
     }
@@ -337,8 +142,8 @@ class AmView {
     private function print_students(){
         ?>
         <div class="students">
-            <div class="students__head d-flex justify-content-between align-content-between">
-                <h1>Students <div class="badge badge-light students__head--badge">12</div> </h1>
+            <div class="students__head d-flex justify-content-between align-content-between"> 
+                <h1>Students <div class="badge badge-light students__head--badge">{{students.length}}</div> </h1>
 
                 <div class="d-flex justify-content-end">
                     <button class="btn btn-primary students__head--button"><i class="fas fa-file-pdf"></i> PDF </button>
@@ -384,139 +189,73 @@ class AmView {
                 <!-- Table body -->
                 <div class="students__table--body">
                     <!-- Table complex row -->
-                    <div class="students__table--row active">
+                    <div class="students__table--row" 
+                         v-for="student in students"
+                         v-bind:class="{active:student.active}"
+                         @click="student.active=!student.active" >
                         <!-- Table row short sortable data -->
                         <div class="students__table--rowshort">
                             <div class="row__student">      
                                 <div class="row__student--avatar">
-                                    <img src="https://via.placeholder.com/30" alt="">
+                                    <img v-bind:src="student.avatar" alt="">
                                 </div>
-                                Anna K.
+                                {{student.name}}
                             </div>
-                            <div class="row__points">  6580</div>
+                            <div class="row__points">  {{student.points}}</div>
                             <div class="row__percent"> 
-                                <div class="percentbar active" data-percentage="81">
-                                    <span style="width: 81%"></span>
+                                <div class="percentbar " 
+
+                                     v-bind:class="getColorOfPercent(student.percents)"
+                                     :data-percentage="student.percents">
+                                    <span :style="{width: student.percents+'%'}"></span>
                                 </div>
                             </div>
-                            <div class="row__date">   01-15-2019</div>
-                            <div class="row__login">  87</div>
-                            <div class="row__time">   28:15:00</div>
+                            <div class="row__date">   {{student.startDate}}</div>
+                            <div class="row__login">  {{student.loginCount}}</div>
+                            <div class="row__time">   {{student.courseTime}}</div>
                             <div class="row__laststep d-flex flex-column"> 
-                                <div class="title"> Jass Study Unit </div>
-                                <div class="subtitle"> Chapter 7 : Big Band - Jazz Swi </div>
+                                <div class="title"> {{student.lastStepUnit}} </div>
+                                <div class="subtitle"> {{student.lastStepChapter}} </div>
                             </div>
-                            <div class="row__lastlogin"> 05-17-2020</div>
+                            <div class="row__lastlogin"> {{student.lastLoginLdate}}</div>
                             <div class="row__contact"> 
-                                <button class="btn btn-primary row__button"><i class="fas fa-envelope"></i> Email</button>
+                                <button class="btn btn-primary row__button" :href="'mailto:'+student.email"><i class="fas fa-envelope"></i> Email</button>
                             </div>
                         </div>
                         <!-- Table row extra full data -->
-                        <div class="students__table--rowextra d-flex justify-content-between align-content-between">
+                        <div class="students__table--rowextra d-flex justify-content-between align-content-between"
+                             v-if="student.quiz.length>0">
                             <div class="rowextra__quiz">
                                 <div class="title">Quiz Status</div>
                                 <div class="rowextra__quiz--chapters">
 
-                                    <div class="rowextra__quiz--chapter">
-                                        <div class="rowextra__quiz--chapterhead">Chapter 1 Quiz</div>
+                                    <div class="rowextra__quiz--chapter"
+                                         v-for="quiz in student.quiz"
+                                         v-bind:class="getColorOfPercent(quiz.score)">
+                                        <div class="rowextra__quiz--chapterhead">{{quiz.name}}</div>
                                         <div class="rowextra__quiz--chapterbody">
                                             <div class="rowextra__quiz--chaptercol d-flex flex-column">
                                                 <div class="rowextra__quiz--coltitle">Attemts</div>
-                                                <div class="rowextra__quiz--coldata colored">7</div>
+                                                <div class="rowextra__quiz--coldata colored"
+                                                     >{{quiz.attempts}}</div>
                                             </div>
                                             <div class="rowextra__quiz--chaptercol d-flex flex-column">
                                                 <div class="rowextra__quiz--coltitle">Last Score (%)</div>
                                                 <div class="rowextra__quiz--coldata colored">
-                                                    <div class="percentbar  green " data-percentage="78">
-                                                        <span style="width: 78%"></span>
+                                                    <div class="percentbar  " 
+                                                         v-bind:class="getColorOfPercent(quiz.score)"
+                                                         :data-percentage="quiz.score" >
+                                                        <span :style="{width: quiz.score+'%'}"></span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="rowextra__quiz--chaptercol d-flex flex-column">
                                                 <div class="rowextra__quiz--coltitle">Date</div>
-                                                <div class="rowextra__quiz--coldata colored">3-2-2020</div>
+                                                <div class="rowextra__quiz--coldata colored">{{quiz.date}}</div>
                                             </div>
                                             <div class="rowextra__quiz--chaptercol d-flex flex-column">
                                                 <div class="rowextra__quiz--coltitle">Duration</div>
-                                                <div class="rowextra__quiz--coldata colored">1:25:34</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="rowextra__quiz--chapter">
-                                        <div class="rowextra__quiz--chapterhead">Chapter 1 Quiz</div>
-                                        <div class="rowextra__quiz--chapterbody">
-                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
-                                                <div class="rowextra__quiz--coltitle">Attemts</div>
-                                                <div class="rowextra__quiz--coldata colored">7</div>
-                                            </div>
-                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
-                                                <div class="rowextra__quiz--coltitle">Last Score (%)</div>
-                                                <div class="rowextra__quiz--coldata colored">
-                                                    <div class="percentbar green " data-percentage="78">
-                                                        <span style="width: 78%"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
-                                                <div class="rowextra__quiz--coltitle">Date</div>
-                                                <div class="rowextra__quiz--coldata colored">3-2-2020</div>
-                                            </div>
-                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
-                                                <div class="rowextra__quiz--coltitle">Duration</div>
-                                                <div class="rowextra__quiz--coldata colored">1:25:34</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="rowextra__quiz--chapter red">
-                                        <div class="rowextra__quiz--chapterhead">Chapter 1 Quiz</div>
-                                        <div class="rowextra__quiz--chapterbody">
-                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
-                                                <div class="rowextra__quiz--coltitle">Attemts</div>
-                                                <div class="rowextra__quiz--coldata colored">7</div>
-                                            </div>
-                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
-                                                <div class="rowextra__quiz--coltitle">Last Score (%)</div>
-                                                <div class="rowextra__quiz--coldata colored">
-                                                    <div class="percentbar red " data-percentage="78">
-                                                        <span style="width: 78%"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
-                                                <div class="rowextra__quiz--coltitle">Date</div>
-                                                <div class="rowextra__quiz--coldata colored">3-2-2020</div>
-                                            </div>
-                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
-                                                <div class="rowextra__quiz--coltitle">Duration</div>
-                                                <div class="rowextra__quiz--coldata colored">1:25:34</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="rowextra__quiz--chapter red">
-                                        <div class="rowextra__quiz--chapterhead">Chapter 1 Quiz</div>
-                                        <div class="rowextra__quiz--chapterbody">
-                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
-                                                <div class="rowextra__quiz--coltitle">Attemts</div>
-                                                <div class="rowextra__quiz--coldata colored">7</div>
-                                            </div>
-                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
-                                                <div class="rowextra__quiz--coltitle">Last Score (%)</div>
-                                                <div class="rowextra__quiz--coldata colored">
-                                                    <div class="percentbar red " data-percentage="78">
-                                                        <span style="width: 78%"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
-                                                <div class="rowextra__quiz--coltitle">Date</div>
-                                                <div class="rowextra__quiz--coldata colored">3-2-2020</div>
-                                            </div>
-                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
-                                                <div class="rowextra__quiz--coltitle">Duration</div>
-                                                <div class="rowextra__quiz--coldata colored">1:25:34</div>
+                                                <div class="rowextra__quiz--coldata colored">{{quiz.duration}}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -524,82 +263,28 @@ class AmView {
 
                                 </div>
                             </div>
-                            <div class="rowextra__course">
+                            <div class="rowextra__course"
+                                 v-if="student.courses.length>0"> 
+
                                 <div class="title">Course Status</div>
                                 <div class="rowextra__course--courses ">
 
-                                    <div class="rowextra__course--course ">
-                                        <div class="rowextra__course--chapterhead">Course 1</div>
+                                    <div class="rowextra__course--course "
+                                         v-for="(course) in student.courses">
+                                        <div class="rowextra__course--chapterhead">{{course.name}}</div>
                                         <div class="rowextra__course--coursebody">
                                             <div class="rowextra__course--coursecol d-flex flex-column">
                                                 <div class="rowextra__course--coldata ">
-                                                    <div class="percentbar blue" data-percentage="81">
-                                                        <span style="width: 81%"></span>
+                                                    <div class="percentbar  " 
+                                                         :data-percentage="course.score"
+                                                         v-bind:class="getColorOfPercent(course.score)">
+                                                        <span :style="{width: course.score+'%'}"></span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="rowextra__course--course ">
-                                        <div class="rowextra__course--chapterhead">Course 1</div>
-                                        <div class="rowextra__course--coursebody">
-                                            <div class="rowextra__course--coursecol d-flex flex-column">
-                                                <div class="rowextra__course--coldata ">
-                                                    <div class="percentbar blue" data-percentage="81">
-                                                        <span style="width: 81%"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="rowextra__course--course ">
-                                        <div class="rowextra__course--chapterhead">Course 1</div>
-                                        <div class="rowextra__course--coursebody">
-                                            <div class="rowextra__course--coursecol d-flex flex-column">
-                                                <div class="rowextra__course--coldata ">
-                                                    <div class="percentbar blue" data-percentage="81">
-                                                        <span style="width: 81%"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="rowextra__course--course ">
-                                        <div class="rowextra__course--chapterhead">Course 1</div>
-                                        <div class="rowextra__course--coursebody">
-                                            <div class="rowextra__course--coursecol d-flex flex-column">
-                                                <div class="rowextra__course--coldata ">
-                                                    <div class="percentbar blue" data-percentage="81">
-                                                        <span style="width: 81%"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="rowextra__course--course ">
-                                        <div class="rowextra__course--chapterhead">Course 1</div>
-                                        <div class="rowextra__course--coursebody">
-                                            <div class="rowextra__course--coursecol d-flex flex-column">
-                                                <div class="rowextra__course--coldata ">
-                                                    <div class="percentbar blue" data-percentage="81">
-                                                        <span style="width: 81%"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="rowextra__course--course ">
-                                        <div class="rowextra__course--chapterhead">Course 1</div>
-                                        <div class="rowextra__course--coursebody">
-                                            <div class="rowextra__course--coursecol d-flex flex-column">
-                                                <div class="rowextra__course--coldata ">
-                                                    <div class="percentbar blue" data-percentage="81">
-                                                        <span style="width: 81%"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
 
                                 </div>
                             </div>
@@ -607,229 +292,6 @@ class AmView {
                         <hr class="students__head--hr d-shadow">
                     </div>
 
-                    <!-- Table complex row -->
-                    <div class="students__table--row">
-                        <!-- Table row short sortable data -->
-                        <div class="students__table--rowshort">
-                            <div class="row__student">      
-                                <div class="row__student--avatar">
-                                    <img src="https://via.placeholder.com/30" alt="">
-                                </div>
-                                Anna K.
-                            </div>
-                            <div class="row__points">  6580</div>
-                            <div class="row__percent"> 
-                                <div class="percentbar active" data-percentage="81">
-                                    <span style="width: 81%"></span>
-                                </div>
-                            </div>
-                            <div class="row__date">   01-15-2019</div>
-                            <div class="row__login">  87</div>
-                            <div class="row__time">   28:15:00</div>
-                            <div class="row__laststep d-flex flex-column"> 
-                                <div class="title"> Jass Study Unit </div>
-                                <div class="subtitle"> Chapter 7 : Big Band - Jazz Swi </div>
-                            </div>
-                            <div class="row__lastlogin"> 05-17-2020</div>
-                            <div class="row__contact"> 
-                                <button class="btn btn-primary row__button"><i class="fas fa-envelope"></i> Email</button>
-                            </div>
-                        </div>
-                        <!-- Table row extra full data -->
-                        <div class="students__table--rowextra d-flex justify-content-between align-content-between">
-                            <div class="rowextra__quiz">
-                                <div class="title">Quiz Status</div>
-                                <div class="rowextra__quiz--chapters">
-
-                                    <div class="rowextra__quiz--chapter">
-                                        <div class="rowextra__quiz--chapterhead">Chapter 1 Quiz</div>
-                                        <div class="rowextra__quiz--chapterbody">
-                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
-                                                <div class="rowextra__quiz--coltitle">Attemts</div>
-                                                <div class="rowextra__quiz--coldata colored">7</div>
-                                            </div>
-                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
-                                                <div class="rowextra__quiz--coltitle">Last Score (%)</div>
-                                                <div class="rowextra__quiz--coldata colored">
-                                                    <div class="percentbar  green " data-percentage="78">
-                                                        <span style="width: 78%"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
-                                                <div class="rowextra__quiz--coltitle">Date</div>
-                                                <div class="rowextra__quiz--coldata colored">3-2-2020</div>
-                                            </div>
-                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
-                                                <div class="rowextra__quiz--coltitle">Duration</div>
-                                                <div class="rowextra__quiz--coldata colored">1:25:34</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="rowextra__quiz--chapter">
-                                        <div class="rowextra__quiz--chapterhead">Chapter 1 Quiz</div>
-                                        <div class="rowextra__quiz--chapterbody">
-                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
-                                                <div class="rowextra__quiz--coltitle">Attemts</div>
-                                                <div class="rowextra__quiz--coldata colored">7</div>
-                                            </div>
-                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
-                                                <div class="rowextra__quiz--coltitle">Last Score (%)</div>
-                                                <div class="rowextra__quiz--coldata colored">
-                                                    <div class="percentbar green " data-percentage="78">
-                                                        <span style="width: 78%"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
-                                                <div class="rowextra__quiz--coltitle">Date</div>
-                                                <div class="rowextra__quiz--coldata colored">3-2-2020</div>
-                                            </div>
-                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
-                                                <div class="rowextra__quiz--coltitle">Duration</div>
-                                                <div class="rowextra__quiz--coldata colored">1:25:34</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="rowextra__quiz--chapter red">
-                                        <div class="rowextra__quiz--chapterhead">Chapter 1 Quiz</div>
-                                        <div class="rowextra__quiz--chapterbody">
-                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
-                                                <div class="rowextra__quiz--coltitle">Attemts</div>
-                                                <div class="rowextra__quiz--coldata colored">7</div>
-                                            </div>
-                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
-                                                <div class="rowextra__quiz--coltitle">Last Score (%)</div>
-                                                <div class="rowextra__quiz--coldata colored">
-                                                    <div class="percentbar red " data-percentage="78">
-                                                        <span style="width: 78%"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
-                                                <div class="rowextra__quiz--coltitle">Date</div>
-                                                <div class="rowextra__quiz--coldata colored">3-2-2020</div>
-                                            </div>
-                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
-                                                <div class="rowextra__quiz--coltitle">Duration</div>
-                                                <div class="rowextra__quiz--coldata colored">1:25:34</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="rowextra__quiz--chapter red">
-                                        <div class="rowextra__quiz--chapterhead">Chapter 1 Quiz</div>
-                                        <div class="rowextra__quiz--chapterbody">
-                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
-                                                <div class="rowextra__quiz--coltitle">Attemts</div>
-                                                <div class="rowextra__quiz--coldata colored">7</div>
-                                            </div>
-                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
-                                                <div class="rowextra__quiz--coltitle">Last Score (%)</div>
-                                                <div class="rowextra__quiz--coldata colored">
-                                                    <div class="percentbar red " data-percentage="78">
-                                                        <span style="width: 78%"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
-                                                <div class="rowextra__quiz--coltitle">Date</div>
-                                                <div class="rowextra__quiz--coldata colored">3-2-2020</div>
-                                            </div>
-                                            <div class="rowextra__quiz--chaptercol d-flex flex-column">
-                                                <div class="rowextra__quiz--coltitle">Duration</div>
-                                                <div class="rowextra__quiz--coldata colored">1:25:34</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                            </div>
-                            <div class="rowextra__course">
-                                <div class="title">Course Status</div>
-                                <div class="rowextra__course--courses ">
-
-                                    <div class="rowextra__course--course ">
-                                        <div class="rowextra__course--chapterhead">Course 1</div>
-                                        <div class="rowextra__course--coursebody">
-                                            <div class="rowextra__course--coursecol d-flex flex-column">
-                                                <div class="rowextra__course--coldata ">
-                                                    <div class="percentbar blue" data-percentage="81">
-                                                        <span style="width: 81%"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="rowextra__course--course ">
-                                        <div class="rowextra__course--chapterhead">Course 1</div>
-                                        <div class="rowextra__course--coursebody">
-                                            <div class="rowextra__course--coursecol d-flex flex-column">
-                                                <div class="rowextra__course--coldata ">
-                                                    <div class="percentbar blue" data-percentage="81">
-                                                        <span style="width: 81%"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="rowextra__course--course ">
-                                        <div class="rowextra__course--chapterhead">Course 1</div>
-                                        <div class="rowextra__course--coursebody">
-                                            <div class="rowextra__course--coursecol d-flex flex-column">
-                                                <div class="rowextra__course--coldata ">
-                                                    <div class="percentbar blue" data-percentage="81">
-                                                        <span style="width: 81%"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="rowextra__course--course ">
-                                        <div class="rowextra__course--chapterhead">Course 1</div>
-                                        <div class="rowextra__course--coursebody">
-                                            <div class="rowextra__course--coursecol d-flex flex-column">
-                                                <div class="rowextra__course--coldata ">
-                                                    <div class="percentbar blue" data-percentage="81">
-                                                        <span style="width: 81%"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="rowextra__course--course ">
-                                        <div class="rowextra__course--chapterhead">Course 1</div>
-                                        <div class="rowextra__course--coursebody">
-                                            <div class="rowextra__course--coursecol d-flex flex-column">
-                                                <div class="rowextra__course--coldata ">
-                                                    <div class="percentbar blue" data-percentage="81">
-                                                        <span style="width: 81%"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="rowextra__course--course ">
-                                        <div class="rowextra__course--chapterhead">Course 1</div>
-                                        <div class="rowextra__course--coursebody">
-                                            <div class="rowextra__course--coursecol d-flex flex-column">
-                                                <div class="rowextra__course--coldata ">
-                                                    <div class="percentbar blue" data-percentage="81">
-                                                        <span style="width: 81%"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="students__head--hr d-shadow">
-                    </div>
                 </div>
 
             </div>
@@ -859,6 +321,7 @@ class AmView {
 		wp_enqueue_script( 'ampoppublic', plugin_dir_url( __FILE__ ) . '../js/ampopuplearn-public.js', array( 'vue' ), '1.0', false );
         wp_localize_script( 'ampoppublic', 'ampoppublic_params', array( 
             'userid' 	=> 	\get_current_user_id(  ), 
+            'nonce' => wp_create_nonce('usin_global'),
             )
         );
         //     'ajaxurl'	=>	\admin_url( 'admin-ajax.php' ),

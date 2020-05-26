@@ -11816,6 +11816,9 @@ input[type=text].searchbar__input:selection {
   background-color: #34399d;
   color: white;
 }
+.students__table--row.active .students__table--rowshort .percentbar:after {
+  color: white;
+}
 .students__table--row.active .students__table--rowextra {
   height: auto;
 }
@@ -11978,9 +11981,6 @@ input[type=text].searchbar__input:selection {
   padding: 2px;
   width: 100%;
   margin-right: 30px;
-}
-.percentbar.active:after {
-  color: white;
 }
 .percentbar:after {
   content: attr(data-percentage) "%";

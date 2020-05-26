@@ -52,6 +52,57 @@ class PostHelper {
         return $study_units_data;
     }
 
+    // get category students
+    public static function get_category_students($category_id=123){
+        $result = [
+            [ 'name'=> 'Anna K.',
+              'avatar'=> 'https://via.placeholder.com/30',
+              'points' => rand(6000,10000),
+              'percents' => rand(0,100),
+              'startDate' => '01-15-2019',
+              'loginCount' => rand(0,100),
+              'courseTime' => rand(1,24).':'.rand(1,60).':00',
+              'lastStepUnit' => 'Jess Study Unit',
+              'lastStepChapter' => 'Chapter 7: Big Bang Jazz Swi',
+              'lastLoginLdate' => '01-15-2020',
+              'email' => 'asd@sdfsdf.ru',
+              'active'=>false,
+              'quiz' => [
+                [
+                    'name' => 'Chapter 1 Quiz',
+                    'attempts'=>rand(0,50),
+                    'score'=>rand(0,100),
+                    'date' => '01-15-2019',
+                    'duration' => rand(1,24).':'.rand(1,60).':00',
+                ],
+                [
+                    'name' => 'Chapter 2 Quiz',
+                    'attempts'=>rand(0,50),
+                    'score'=>rand(0,100),
+                    'date' => '01-15-2019',
+                    'duration' => rand(1,24).':'.rand(1,60).':00',
+                ],
+                [
+                    'name' => 'Chapter 3 Quiz',
+                    'attempts'=>rand(0,50),
+                    'score'=>rand(0,100),
+                    'date' => '01-15-2019',
+                    'duration' => rand(1,24).':'.rand(1,60).':00',
+                ]
+              ],
+              'courses'=>[
+                [ 'name'=> 'Course 1',
+                   'score'=> rand(0,100) ],
+                   [ 'name'=> 'Course 2',
+                   'score'=> rand(0,100) ],
+                   [ 'name'=> 'Course 3',
+                   'score'=> rand(0,100) ],
+              ]
+            ]
+        ];
+        return $result;
+    }
+
     public static function get_user_report_data(){
         if ( class_exists( 'Learndash_Admin_Settings_Data_Reports' ) ) {
             $ld_admin_settings_data_reports = new Learndash_Admin_Settings_Data_Reports;

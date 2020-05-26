@@ -209,6 +209,11 @@
                 .students__table--rowshort{
                     background-color: $primary;
                     color: white;
+                    .percentbar{
+                        &:after{
+                            color:white; 
+                        }
+                    }
                 }
 
                 .students__table--rowextra{
@@ -411,11 +416,7 @@
     width: 100%;
     margin-right:30px;
 
-    &.active{
-        &:after{
-            color:white; 
-        }
-    }
+    
 
     &:after{
         content: attr(data-percentage) "%";

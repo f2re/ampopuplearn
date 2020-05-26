@@ -1,4 +1,4 @@
-( function() {
+window.onload = function () {
 	/**
 	 * Vue main component 
 	 * AmpopMusic plugin
@@ -24,43 +24,42 @@
 		students:[],
 
 	  },
+	  methods: {
+		  getColorOfPercent(percent){
+			  var result = [];
+			  if ( percent<40 ){
+				result.push('red');
+			  }else
+			  if ( percent<60 ){
+				result.push('blue');
+			  }else{
+				result.push('green');				  
+			  }
+			  return result;
+		  }
+	  },
 	  mounted: function(){
-		console.log("Hello Vue!");
-
-		// fetch( '/wp-json/ampopmusic/v1/report' ).then(response => console.log(response));
-
-
-		jQuery.ajax({
-			type: "POST",
-			url: '/wp-admin/admin-ajax.php?_fs_blog_admin=true',
-			dataType: "json",
-			cache: false,
-			data: {
-				'action': 'ampopmusic_getreport',
-				'userid': ampoppublic_params.userid,
-				'data': {
-					'init': 1,
-					'nonce': '5ba39ba0b8',
-					'slug': 'user-courses',
-				} },
-			error: function(jqXHR, textStatus, errorThrown ) {
-			},
-			success: function(reply_data) {
-				console.log(reply_data)
-			}
-		});
-		return;
-
+		let _vue = this;
 		fetch( '/wp-admin/admin-ajax.php',{
 			method: 'POST',
-			body: JSON.stringify({
-				'action': 'learndash_propanel_reporting_get_result_rows',
-				// 'nonce' : ld_propanel_settings.nonce,
-				// 'filters' : currentFilters,
-				'container_type' : 'widget' })
-		} ).then( response => console.log(response));
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+			},
+			credentials: 'same-origin',
+			body: 'action=ampopmusic_getreport&category_id='+"123",
+		} ).then((response) => {
+			return response.json();
+		  }).then( data => {
+			// save Students
+			_vue.students = data.data;
+			console.log(_vue.students);
+			// save active category
+			_vue.active_category = data.category_id;
+		});
+
+		return;
 
 	  }
 	});
-})();
+};
   
