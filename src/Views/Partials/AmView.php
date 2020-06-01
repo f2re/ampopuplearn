@@ -59,14 +59,43 @@ class AmView {
      * @return void
      */
     public function run(){
-        // start output html
-        $this->print_begin();
 
-        // print content
-        $this->print_content();
+        if ( $this->check_user_is_leader() ){
 
-        // finish and close all html blocks
-        $this->print_end();
+            // start output html
+            $this->print_begin();
+
+            // print content
+            $this->print_content();
+
+            // finish and close all html blocks
+            $this->print_end();
+        }else{
+            echo "<script> window.location.href='/members'; </script>"; 
+        }
+    }
+
+    /**
+     * check if user in leader group
+     */
+    public function check_user_is_leader(){
+        $user_id = get_current_user_id(  );
+
+        $leader_groups = LeardashGroups();
+        // print_r($leader_groups);
+
+        foreach ($leader_groups as $_l){
+            if (isset($_l['groupleaders']) ){
+                foreach ($_l['groupleaders'] as $_gl){
+                    if ($user_id == $_gl->ID) {
+                        // print_r($_gl);
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;        
     }
 
     /**
