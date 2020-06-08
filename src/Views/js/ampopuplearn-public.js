@@ -23,7 +23,44 @@ window.onload = function () {
 		// Array of students in selected category
 		students:[],
 
+		datefrom:'',
+		dateto:'',
+
+		// sort params
+		sort:'name',
+		reversesort:false,
+
 	  },
+
+	  computed:{
+		//   calc students, sort, arrange and filter
+		students_prepared:function(){
+			let _vue = this;
+			let prepared = _vue.students;
+			
+			// realize filter function
+			if ( _vue.datefrom!='' && _vue.dateto!='' ){
+				let dt = new Date(_vue.datefrom);
+				let dt_to = new Date(_vue.dateto);
+				
+				prepared = prepared.filter( obj => {
+					const [ month, day, year] = obj.startDate.split("-");
+					let _dt = new Date(year, month - 1, day);
+					return _dt>=dt && _dt<=dt_to;
+				} );
+			}
+
+			// realize sort function
+			function customsort(a, b) {
+				if (a[_vue.sort] < b[_vue.sort]) return _vue.reversesort?-1:1;
+				if (a[_vue.sort] > b[_vue.sort]) return _vue.reversesort?1:-1;
+				return 0;
+			 }
+			 // return this.users.sort(surnameName); // sorts in-place
+			 return [...prepared].sort(customsort); // shallow clone + sort
+		}
+	  },
+
 	  methods: {
 		  getColorOfPercent(percent){
 			  var result = [];
@@ -36,6 +73,18 @@ window.onload = function () {
 				result.push('green');				  
 			  }
 			  return result;
+		  },
+		  /**
+		   * set sort method
+		   * @param {} label 
+		   */
+		  setSort(label){
+			if ( this.sort==label ){
+				this.reversesort = !this.reversesort;
+			}else{
+				this.sort=label;
+				this.reversesort=false;
+			}
 		  }
 	  },
 	  mounted: function(){

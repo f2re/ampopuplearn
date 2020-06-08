@@ -182,7 +182,7 @@ class AmView {
                         <div class="input-group-prepend students__head--prepend">
                             <span class="input-group-text" >FROM:</span>
                         </div>
-                        <input type="date" class="form-control students__head--input" v-model="datefrom" placeholder="Date" value="04-24-2019">
+                        <input type="date" class="form-control students__head--input" v-model="datefrom" placeholder="Date" value="04-24-2019" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
                         <div class="input-group-append students__head--append">
                             <span class="btn btn-primary students__head--button" ><i class="fas fa-chevron-down"></i></span>
                         </div>
@@ -192,7 +192,7 @@ class AmView {
                         <div class="input-group-prepend students__head--prepend">
                             <span class="input-group-text" >TO:</span>
                         </div>
-                        <input type="date" class="form-control students__head--input" v-model="dateto" placeholder="Date" value="04-24-2020">
+                        <input type="date" class="form-control students__head--input" v-model="dateto" v-bind:min="datefrom" placeholder="Date" value="04-24-2020" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
                         <div class="input-group-append students__head--append">
                             <span class="btn btn-primary students__head--button" ><i class="fas fa-chevron-down"></i></span>
                         </div>
@@ -205,21 +205,37 @@ class AmView {
             <div class="students__table">
                 <!-- Table header -->
                 <div class="students__table--header">
-                    <div class="header__student active">Student <span class="action__sort"><i class="fas fa-arrow-up"></i></span> </div>
-                    <div class="header__points">Points <span class="action__sort"><i class="fas fa-arrow-up"></i></span> </div>
-                    <div class="header__percent">Percent completed <span class="action__sort"><i class="fas fa-arrow-up"></i></span> </div>
-                    <div class="header__date">Start Date <span class="action__sort"><i class="fas fa-arrow-up"></i></span> </div>
-                    <div class="header__login">Login count <span class="action__sort"><i class="fas fa-arrow-up"></i></span> </div>
-                    <div class="header__time">Course Time <span class="action__sort"><i class="fas fa-arrow-up"></i></span> </div>
-                    <div class="header__laststep">Latest Course Step <span class="action__sort"><i class="fas fa-arrow-up"></i></span> </div>
-                    <div class="header__lastlogin">Last Login Date<span class="action__sort"><i class="fas fa-arrow-up"></i></span> </div>
-                    <div class="header__contact">Contact <span class="action__sort"><i class="fas fa-arrow-up"></i></span> </div>
+                    <div class="header__student"    
+                         v-bind:class="{active:sort=='name'}"
+                         v-on:click="setSort('name')">Student <span class="action__sort"><i class="fas " v-bind:class="{'fa-arrow-up':!reversesort, 'fa-arrow-down':reversesort }" ></i></span> </div>
+                    <div class="header__points"     
+                         v-bind:class="{active:sort=='points'}"
+                         v-on:click="setSort('points')">Points <span class="action__sort"><i class="fas" v-bind:class="{'fa-arrow-up':!reversesort, 'fa-arrow-down':reversesort }" ></i></span> </div>
+                    <div class="header__percent"    
+                         v-bind:class="{active:sort=='percents'}"
+                         v-on:click="setSort('percents')">Percent completed <span class="action__sort"><i class="fas" v-bind:class="{'fa-arrow-up':!reversesort, 'fa-arrow-down':reversesort }" ></i></span> </div>
+                    <div class="header__date"   
+                         v-bind:class="{active:sort=='startDate'}"
+                         v-on:click="setSort('startDate')">Start Date <span class="action__sort"><i class="fas" v-bind:class="{'fa-arrow-up':!reversesort, 'fa-arrow-down':reversesort }" ></i></span> </div>
+                    <div class="header__login"      
+                         v-bind:class="{active:sort=='loginCount'}"
+                         v-on:click="setSort('loginCount')">Login count <span class="action__sort"><i class="fas" v-bind:class="{'fa-arrow-up':!reversesort, 'fa-arrow-down':reversesort }" ></i></span> </div>
+                    <div class="header__time"   
+                         v-bind:class="{active:sort=='courseTime'}"
+                         v-on:click="setSort('courseTime')">Course Time <span class="action__sort"><i class="fas" v-bind:class="{'fa-arrow-up':!reversesort, 'fa-arrow-down':reversesort }" ></i></span> </div>
+                    <div class="header__laststep"   
+                         v-bind:class="{active:sort=='lastStepUnit'}"
+                         v-on:click="setSort('lastStepUnit')">Latest Course Step <span class="action__sort"><i class="fas" v-bind:class="{'fa-arrow-up':!reversesort, 'fa-arrow-down':reversesort }" ></i></span> </div>
+                    <div class="header__lastlogin"      
+                         v-bind:class="{active:sort=='lastLoginLdate'}"
+                         v-on:click="setSort('lastLoginLdate')">Last Login Date<span class="action__sort"><i class="fas" v-bind:class="{'fa-arrow-up':!reversesort, 'fa-arrow-down':reversesort }" ></i></span> </div>
+                    <div class="header__contact" >Contact <span class="action__sort"><i class="fas fa-arrow-up"></i></span> </div>
                 </div>
                 <!-- Table body -->
                 <div class="students__table--body">
                     <!-- Table complex row -->
                     <div class="students__table--row" 
-                         v-for="student in students"
+                         v-for="student in students_prepared"
                          v-bind:class="{active:student.active}"
                          @click="student.active=!student.active" >
                         <!-- Table row short sortable data -->

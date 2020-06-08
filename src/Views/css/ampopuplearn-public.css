@@ -11799,11 +11799,12 @@ input[type=text].searchbar__input:selection {
 .students__table--header {
   display: grid;
   grid-template-areas: "header__student header__points header__percent header__date header__login header__time header__laststep header__lastlogin header__contact";
-  grid-template-columns: 140px 140px 1fr 140px 160px 160px 240px 240px 140px;
+  grid-template-columns: 140px 140px 1fr 160px 160px 160px 240px 240px 140px;
   margin: 0;
 }
 .students__table--header > div {
   padding: 15px 20px;
+  cursor: pointer;
 }
 .students__table--header > div.active span {
   display: inline-block;
