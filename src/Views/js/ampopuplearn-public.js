@@ -38,6 +38,16 @@ window.onload = function () {
 			let _vue = this;
 			let prepared = _vue.students;
 			
+			
+			// filter by courses
+			if ( _vue.active_category>0 ){
+				prepared = prepared.filter( obj => {
+					if ( obj.courseprogress.indexOf( _vue.active_category ) !== -1 ){
+						return true;
+					}
+				} );
+			}
+			
 			// realize filter function
 			if ( _vue.datefrom!='' && _vue.dateto!='' ){
 				let dt = new Date(_vue.datefrom);
@@ -62,7 +72,24 @@ window.onload = function () {
 	  },
 
 	  methods: {
-		  getColorOfPercent(percent){
+		/**
+		 * set category filter
+		 * @param {*} id 
+		 */
+		setCategory(id){
+			if ( this.active_category == id ){
+				this.active_category = '';
+			}else{
+				this.active_category = parseInt(id);
+			}
+			// console.log(id);
+		},
+
+		/**
+		 * Get color of percentage bar
+		 * @param {} percent 
+		 */
+		getColorOfPercent(percent){
 			  var result = [];
 			  if ( percent<40 ){
 				result.push('red');
@@ -73,19 +100,20 @@ window.onload = function () {
 				result.push('green');				  
 			  }
 			  return result;
-		  },
+		},
+		
 		  /**
 		   * set sort method
 		   * @param {} label 
 		   */
-		  setSort(label){
+		setSort(label){
 			if ( this.sort==label ){
 				this.reversesort = !this.reversesort;
 			}else{
 				this.sort=label;
 				this.reversesort=false;
 			}
-		  }
+		}
 	  },
 	  mounted: function(){
 		let _vue = this;
@@ -103,7 +131,7 @@ window.onload = function () {
 			_vue.students = data.data;
 			console.log(_vue.students);
 			// save active category
-			_vue.active_category = data.category_id;
+			// _vue.active_category = data.category_id;
 		});
 
 		return;

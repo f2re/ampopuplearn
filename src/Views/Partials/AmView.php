@@ -145,7 +145,9 @@ class AmView {
                 <?php
                     foreach ($tabs as $tab){
                         ?>
-                        <button class="btn btn-primary ampoptabs__button"><?=$tab['title']?></button>
+                        <button class="btn btn-primary ampoptabs__button" 
+                                v-bind:class="{active:active_category==<?=$tab['id']?>}"
+                                v-on:click="setCategory('<?=$tab['id']?>')"><?=$tab['title']?></button>
                         <?php
                     }
                 ?>
