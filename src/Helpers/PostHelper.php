@@ -55,14 +55,14 @@ class PostHelper {
 
     // get category students
     public static function get_category_students($category_id=123){
-        $blogusers = get_users();
+        $users = get_users();
         $result = [];
         $i = 0;
-		foreach($blogusers as $user){
-			$fullname = get_user_meta($user->ID,'first_name',true).' '.get_user_meta($user->ID,'last_name',true);
-			$usermail = $user->user_email;
-			$courseaccesscounter =  get_user_meta($user->ID,'_learndash_memberpress_enrolled_courses_access_counter',true);
-            $courseprogress =  get_user_meta($user->ID, '_sfwd-course_progress');
+		foreach($users as $user){
+			$fullname = get_user_meta($user->ID,'first_name', true).' '.get_user_meta($user->ID,'last_name',true);
+			$user_email = $user->user_email;
+			$course_access_counter = get_user_meta($user->ID,'_learndash_memberpress_enrolled_courses_access_counter',true);
+            $courseprogress = get_user_meta($user->ID, '_sfwd-course_progress');
             if ( is_array($courseprogress) && isset($courseprogress[0]) ){
                 $_keys = [];
                 foreach ( $courseprogress[0] as $key=>$arr ){
@@ -82,257 +82,131 @@ class PostHelper {
             $result[$i]['lastStepUnit'] = 'Jess Study Unit';
             $result[$i]['lastStepChapter'] = 'Jess Study Unit';
             $result[$i]['lastLoginLdate'] = '01-15-2020';
-            $result[$i]['email'] = $usermail;
+            $result[$i]['email'] = $user_email;
             $result[$i]['active'] = false;
             $result[$i]['quiz'] = [
-                                    [
-                                        'name' => 'Chapter 1 Quiz',
-                                        'attempts'=>rand(0,50),
-                                        'score'=>rand(0,100),
-                                        'date' => '01-15-2019',
-                                        'duration' => rand(1,24).':'.rand(1,60).':00',
-                                    ]];
-            $result[$i]['courses'] = [
                 [
                     'name' => 'Chapter 1 Quiz',
                     'attempts'=>rand(0,50),
                     'score'=>rand(0,100),
                     'date' => '01-15-2019',
                     'duration' => rand(1,24).':'.rand(1,60).':00',
-                ]];
+                    ]];
+                    $result[$i]['courses'] = [
+                [
+                    'name' => 'Chapter 1 Quiz',
+                    'attempts'=>rand(0,50),
+                    'score'=>rand(0,100),
+                    'date' => '01-15-2019',
+                    'duration' => rand(1,24).':'.rand(1,60).':00',
+                    ]
+                ];
 
 			// $result[$user->ID]['usermail'] = $usermail;
-			// $result[$user->ID]['courseaccesscounter'] = $courseaccesscounter;
+            // $result[$user->ID]['courseaccesscounter'] = $courseaccesscounter;
+            
             $result[$i]['courseprogress'] = $courseprogress;
             $i++;
         }
-        // echo '<pre>';
-        // print_r($result);
-        // echo '</pre>';die;
         
-        // $result = [
-        //     [ 'name'=> 'Steve G.',
-        //       'avatar'=> 'https://via.placeholder.com/30',
-        //       'points' => rand(6000,10000),
-        //       'percents' => rand(0,100),
-        //       'startDate' => '01-15-2019',
-        //       'loginCount' => rand(0,100),
-        //       'courseTime' => rand(1,24).':'.rand(1,60).':00',
-        //       'lastStepUnit' => 'Jess Study Unit',
-        //       'lastStepChapter' => 'Chapter 7: Big Bang Jazz Swi',
-        //       'lastLoginLdate' => '01-15-2020',
-        //       'email' => 'asd@sdfsdf.ru',
-        //       'active'=>false,
-        //       'quiz' => [
-        //         [
-        //             'name' => 'Chapter 1 Quiz',
-        //             'attempts'=>rand(0,50),
-        //             'score'=>rand(0,100),
-        //             'date' => '01-15-2019',
-        //             'duration' => rand(1,24).':'.rand(1,60).':00',
-        //         ],
-        //         [
-        //             'name' => 'Chapter 2 Quiz',
-        //             'attempts'=>rand(0,50),
-        //             'score'=>rand(0,100),
-        //             'date' => '01-15-2019',
-        //             'duration' => rand(1,24).':'.rand(1,60).':00',
-        //         ],
-        //         [
-        //             'name' => 'Chapter 3 Quiz',
-        //             'attempts'=>rand(0,50),
-        //             'score'=>rand(0,100),
-        //             'date' => '01-15-2019',
-        //             'duration' => rand(1,24).':'.rand(1,60).':00',
-        //         ]
-        //       ],
-        //       'courses'=>[
-        //         [ 'name'=> 'Course 1',
-        //            'score'=> rand(0,100) ],
-        //            [ 'name'=> 'Course 2',
-        //            'score'=> rand(0,100) ],
-        //            [ 'name'=> 'Course 3',
-        //            'score'=> rand(0,100) ],
-        //       ]
-        //     ],
-		// 	[ 'name'=> 'Anna K.',
-        //       'avatar'=> 'https://via.placeholder.com/30',
-        //       'points' => rand(6000,10000),
-        //       'percents' => rand(0,100),
-        //       'startDate' => '01-15-2019',
-        //       'loginCount' => rand(0,100),
-        //       'courseTime' => rand(1,24).':'.rand(1,60).':00',
-        //       'lastStepUnit' => 'Jess Study Unit',
-        //       'lastStepChapter' => 'Chapter 7: Big Bang Jazz Swi',
-        //       'lastLoginLdate' => '01-15-2020',
-        //       'email' => 'asd@sdfsdf.ru',
-        //       'active'=>false,
-        //       'quiz' => [
-        //         [
-        //             'name' => 'Chapter 1 Quiz',
-        //             'attempts'=>rand(0,50),
-        //             'score'=>rand(0,100),
-        //             'date' => '01-15-2019',
-        //             'duration' => rand(1,24).':'.rand(1,60).':00',
-        //         ],
-        //         [
-        //             'name' => 'Chapter 2 Quiz',
-        //             'attempts'=>rand(0,50),
-        //             'score'=>rand(0,100),
-        //             'date' => '01-15-2019',
-        //             'duration' => rand(1,24).':'.rand(1,60).':00',
-        //         ],
-        //         [
-        //             'name' => 'Chapter 3 Quiz',
-        //             'attempts'=>rand(0,50),
-        //             'score'=>rand(0,100),
-        //             'date' => '01-15-2019',
-        //             'duration' => rand(1,24).':'.rand(1,60).':00',
-        //         ]
-        //       ],
-        //       'courses'=>[
-        //         [ 'name'=> 'Course 1',
-        //            'score'=> rand(0,100) ],
-        //            [ 'name'=> 'Course 2',
-        //            'score'=> rand(0,100) ],
-        //            [ 'name'=> 'Course 3',
-        //            'score'=> rand(0,100) ],
-        //       ]
-        //     ],
-		// 	[ 'name'=> 'Samantha E.',
-        //       'avatar'=> 'https://via.placeholder.com/30',
-        //       'points' => rand(6000,10000),
-        //       'percents' => rand(0,100),
-        //       'startDate' => '01-15-2019',
-        //       'loginCount' => rand(0,100),
-        //       'courseTime' => rand(1,24).':'.rand(1,60).':00',
-        //       'lastStepUnit' => 'Jess Study Unit',
-        //       'lastStepChapter' => 'Chapter 7: Big Bang Jazz Swi',
-        //       'lastLoginLdate' => '01-15-2020',
-        //       'email' => 'asd@sdfsdf.ru',
-        //       'active'=>false,
-        //       'quiz' => [
-        //         [
-        //             'name' => 'Chapter 1 Quiz',
-        //             'attempts'=>rand(0,50),
-        //             'score'=>rand(0,100),
-        //             'date' => '01-15-2019',
-        //             'duration' => rand(1,24).':'.rand(1,60).':00',
-        //         ],
-        //         [
-        //             'name' => 'Chapter 2 Quiz',
-        //             'attempts'=>rand(0,50),
-        //             'score'=>rand(0,100),
-        //             'date' => '01-15-2019',
-        //             'duration' => rand(1,24).':'.rand(1,60).':00',
-        //         ],
-        //         [
-        //             'name' => 'Chapter 3 Quiz',
-        //             'attempts'=>rand(0,50),
-        //             'score'=>rand(0,100),
-        //             'date' => '01-15-2019',
-        //             'duration' => rand(1,24).':'.rand(1,60).':00',
-        //         ]
-        //       ],
-        //       'courses'=>[
-        //         [ 'name'=> 'Course 1',
-        //            'score'=> rand(0,100) ],
-        //            [ 'name'=> 'Course 2',
-        //            'score'=> rand(0,100) ],
-        //            [ 'name'=> 'Course 3',
-        //            'score'=> rand(0,100) ],
-        //       ]
-        //     ],
-		// 	[ 'name'=> 'John P.',
-        //       'avatar'=> 'https://via.placeholder.com/30',
-        //       'points' => rand(6000,10000),
-        //       'percents' => rand(0,100),
-        //       'startDate' => '01-15-2019',
-        //       'loginCount' => rand(0,100),
-        //       'courseTime' => rand(1,24).':'.rand(1,60).':00',
-        //       'lastStepUnit' => 'Jess Study Unit',
-        //       'lastStepChapter' => 'Chapter 7: Big Bang Jazz Swi',
-        //       'lastLoginLdate' => '01-15-2020',
-        //       'email' => 'asd@sdfsdf.ru',
-        //       'active'=>false,
-        //       'quiz' => [
-        //         [
-        //             'name' => 'Chapter 1 Quiz',
-        //             'attempts'=>rand(0,50),
-        //             'score'=>rand(0,100),
-        //             'date' => '01-15-2019',
-        //             'duration' => rand(1,24).':'.rand(1,60).':00',
-        //         ],
-        //         [
-        //             'name' => 'Chapter 2 Quiz',
-        //             'attempts'=>rand(0,50),
-        //             'score'=>rand(0,100),
-        //             'date' => '01-15-2019',
-        //             'duration' => rand(1,24).':'.rand(1,60).':00',
-        //         ],
-        //         [
-        //             'name' => 'Chapter 3 Quiz',
-        //             'attempts'=>rand(0,50),
-        //             'score'=>rand(0,100),
-        //             'date' => '01-15-2019',
-        //             'duration' => rand(1,24).':'.rand(1,60).':00',
-        //         ]
-        //       ],
-        //       'courses'=>[
-        //         [ 'name'=> 'Course 1',
-        //            'score'=> rand(0,100) ],
-        //            [ 'name'=> 'Course 2',
-        //            'score'=> rand(0,100) ],
-        //            [ 'name'=> 'Course 3',
-        //            'score'=> rand(0,100) ],
-        //       ]
-        //     ],
-		// 	[ 'name'=> 'John P.',
-        //       'avatar'=> 'https://via.placeholder.com/30',
-        //       'points' => rand(6000,10000),
-        //       'percents' => rand(0,100),
-        //       'startDate' => '01-15-2019',
-        //       'loginCount' => rand(0,100),
-        //       'courseTime' => rand(1,24).':'.rand(1,60).':00',
-        //       'lastStepUnit' => 'Jess Study Unit',
-        //       'lastStepChapter' => 'Chapter 7: Big Bang Jazz Swi',
-        //       'lastLoginLdate' => '01-15-2020',
-        //       'email' => 'asd@sdfsdf.ru',
-        //       'active'=>false,
-        //       'quiz' => [
-        //         [
-        //             'name' => 'Chapter 1 Quiz',
-        //             'attempts'=>rand(0,50),
-        //             'score'=>rand(0,100),
-        //             'date' => '01-15-2019',
-        //             'duration' => rand(1,24).':'.rand(1,60).':00',
-        //         ],
-        //         [
-        //             'name' => 'Chapter 2 Quiz',
-        //             'attempts'=>rand(0,50),
-        //             'score'=>rand(0,100),
-        //             'date' => '01-15-2019',
-        //             'duration' => rand(1,24).':'.rand(1,60).':00',
-        //         ],
-        //         [
-        //             'name' => 'Chapter 3 Quiz',
-        //             'attempts'=>rand(0,50),
-        //             'score'=>rand(0,100),
-        //             'date' => '01-15-2019',
-        //             'duration' => rand(1,24).':'.rand(1,60).':00',
-        //         ]
-        //       ],
-        //       'courses'=>[
-        //         [ 'name'=> 'Course 1',
-        //            'score'=> rand(0,100) ],
-        //            [ 'name'=> 'Course 2',
-        //            'score'=> rand(0,100) ],
-        //            [ 'name'=> 'Course 3',
-        //            'score'=> rand(0,100) ],
-        //       ]
-        //     ]
-        // ];
+        /*
+        echo '<pre>';
+        print_r($result);
+        echo '</pre>';
+        die;
         
+        $result = [
+            [ 'name'=> 'Steve G.',
+              'avatar'=> 'https://via.placeholder.com/30',
+              'points' => rand(6000,10000),
+              'percents' => rand(0,100),
+              'startDate' => '01-15-2019',
+              'loginCount' => rand(0,100),
+              'courseTime' => rand(1,24).':'.rand(1,60).':00',
+              'lastStepUnit' => 'Jess Study Unit',
+              'lastStepChapter' => 'Chapter 7: Big Bang Jazz Swi',
+              'lastLoginLdate' => '01-15-2020',
+              'email' => 'asd@sdfsdf.ru',
+              'active'=>false,
+              'quiz' => [
+                [
+                    'name' => 'Chapter 1 Quiz',
+                    'attempts'=>rand(0,50),
+                    'score'=>rand(0,100),
+                    'date' => '01-15-2019',
+                    'duration' => rand(1,24).':'.rand(1,60).':00',
+                ],
+                [
+                    'name' => 'Chapter 2 Quiz',
+                    'attempts'=>rand(0,50),
+                    'score'=>rand(0,100),
+                    'date' => '01-15-2019',
+                    'duration' => rand(1,24).':'.rand(1,60).':00',
+                ],
+                [
+                    'name' => 'Chapter 3 Quiz',
+                    'attempts'=>rand(0,50),
+                    'score'=>rand(0,100),
+                    'date' => '01-15-2019',
+                    'duration' => rand(1,24).':'.rand(1,60).':00',
+                ]
+              ],
+              'courses'=>[
+                [ 'name'=> 'Course 1',
+                   'score'=> rand(0,100) ],
+                   [ 'name'=> 'Course 2',
+                   'score'=> rand(0,100) ],
+                   [ 'name'=> 'Course 3',
+                   'score'=> rand(0,100) ],
+              ]
+            ],
+			[ 'name'=> 'Anna K.',
+              'avatar'=> 'https://via.placeholder.com/30',
+              'points' => rand(6000,10000),
+              'percents' => rand(0,100),
+              'startDate' => '01-15-2019',
+              'loginCount' => rand(0,100),
+              'courseTime' => rand(1,24).':'.rand(1,60).':00',
+              'lastStepUnit' => 'Jess Study Unit',
+              'lastStepChapter' => 'Chapter 7: Big Bang Jazz Swi',
+              'lastLoginLdate' => '01-15-2020',
+              'email' => 'asd@sdfsdf.ru',
+              'active'=>false,
+              'quiz' => [
+                [
+                    'name' => 'Chapter 1 Quiz',
+                    'attempts'=>rand(0,50),
+                    'score'=>rand(0,100),
+                    'date' => '01-15-2019',
+                    'duration' => rand(1,24).':'.rand(1,60).':00',
+                ],
+                [
+                    'name' => 'Chapter 2 Quiz',
+                    'attempts'=>rand(0,50),
+                    'score'=>rand(0,100),
+                    'date' => '01-15-2019',
+                    'duration' => rand(1,24).':'.rand(1,60).':00',
+                ],
+                [
+                    'name' => 'Chapter 3 Quiz',
+                    'attempts'=>rand(0,50),
+                    'score'=>rand(0,100),
+                    'date' => '01-15-2019',
+                    'duration' => rand(1,24).':'.rand(1,60).':00',
+                ]
+              ],
+              'courses'=>[
+                [ 'name'=> 'Course 1',
+                   'score'=> rand(0,100) ],
+                   [ 'name'=> 'Course 2',
+                   'score'=> rand(0,100) ],
+                   [ 'name'=> 'Course 3',
+                   'score'=> rand(0,100) ],
+              ]
+            ],
+        ];
+        */
+
         return $result;
     }
 

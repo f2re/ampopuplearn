@@ -106,6 +106,7 @@ class AmView {
     private function print_begin(){
         ?>
         <div id="ampopmusiclearn" class="bg-light w-100 h-100">
+            <div class="dashboard__container">
         <?php
 
 
@@ -141,16 +142,19 @@ class AmView {
         // get music categories or tab
         $tabs = PostHelper::get_music_categories(true);
         ?>
-            <div class="d-flex justify-content-between align-content-between flex-nowrap ampoptabs">
-                <?php
-                    foreach ($tabs as $tab){
-                        ?>
-                        <button class="btn btn-primary ampoptabs__button" 
-                                v-bind:class="{active:active_category==<?=$tab['id']?>}"
-                                v-on:click="setCategory('<?=$tab['id']?>')"><?=$tab['title']?></button>
-                        <?php
-                    }
-                ?>
+            <div class="slider__wrap">
+                <Slider />
+                <div class="d-flex justify-content-between align-content-between flex-nowrap ampoptabs">
+                    <?php
+                        foreach ($tabs as $tab){
+                            ?>
+                            <button class="btn btn-primary ampoptabs__button" 
+                                    v-bind:class="{active:active_category==<?=$tab['id']?>}"
+                                    v-on:click="setCategory('<?=$tab['id']?>')"><?=$tab['title']?></button>
+                            <?php
+                        }
+                    ?>
+                </div>
             </div>
         <?php
     }
@@ -338,11 +342,8 @@ class AmView {
                         </div>
                         <hr class="students__head--hr d-shadow">
                     </div>
-
                 </div>
-
             </div>
-
         </div>
         <?php
     }
@@ -355,16 +356,20 @@ class AmView {
      */
     private function print_end(){
         ?>
+                </div>
             </div>
         <?php
     }
-
+    
     /**
      * [enqueue_scripts jquery and validate
      * @return [type] [description]
      */
     public function enqueue_scripts(){  
         wp_enqueue_script( 'vue', plugin_dir_url( __FILE__ ) . '../js/vendor/vue.js', [], '2.6.11', false );
+        wp_enqueue_script( 'httpVueLoader', plugin_dir_url( __FILE__ ) . '../js/vendor/httpVueLoader.js', [], '', false );
+        wp_enqueue_script( 'vue-awesome-swiper', 'https://cdn.jsdelivr.net/npm/vue-awesome-swiper', [], '', false );
+        wp_enqueue_script( 'vue-awesome-swiper-library', 'https://cdn.jsdelivr.net/npm/swiper@5.3.6/js/swiper.min.js', [], '', false );
 		wp_enqueue_script( 'ampoppublic', plugin_dir_url( __FILE__ ) . '../js/ampopuplearn-public.js', array( 'vue' ), '1.0', false );
         wp_localize_script( 'ampoppublic', 'ampoppublic_params', array( 
             'userid' 	=> 	\get_current_user_id(  ), 
@@ -382,7 +387,8 @@ class AmView {
      * @return [type] [description]
      */
     public function enqueue_styles(){  
-		wp_enqueue_style( 'ampoppublic_style', plugin_dir_url( __FILE__ ) . '../css/ampopuplearn-public.css', array(), '1.0', 'all' );
+        wp_enqueue_style( 'ampoppublic_style', plugin_dir_url( __FILE__ ) . '../css/ampopuplearn-public.css', array(), '1.0', 'all' );
+        wp_equene_style( 'vue-awesome-swiper-styles', 'https://cdn.jsdelivr.net/npm/swiper@5.3.6/css/swiper.min.css', array(), '1.0' 'all');
     }
 
 }
