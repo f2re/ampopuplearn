@@ -11612,8 +11612,19 @@ readers do not read off random characters that represent icons */
   width: auto;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .bg-light {
   background-color: #f9fafc;
+}
+
+/**
+ * Main container
+ */
+.dashboard__container {
+  padding: 0 40px;
 }
 
 /**
@@ -11668,6 +11679,105 @@ input[type=text].searchbar__input:selection {
 }
 
 /**
+ * Swiper section
+ */
+#swiper {
+  background-color: #fff;
+  padding: 40px 0;
+  transition: 0.4s transform;
+}
+#swiper .swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  min-height: 200px;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  margin-right: 10px;
+  transition: 0.4s transform;
+  z-index: 10 !important;
+}
+#swiper .swiper-slide:hover .swiper-slide:after {
+  opacity: 0 !important;
+}
+#swiper .swiper-slide:after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  opacity: 1;
+  transition: 0.3s opacity;
+}
+#swiper .swiper-slide:hover:after {
+  background-color: rgba(0, 0, 0, 0);
+  opacity: 0;
+  transition: 0.3s opacity;
+}
+#swiper .swiper-slide.active:after {
+  background-color: rgba(0, 0, 0, 0);
+  opacity: 0;
+  transition: 0.3s opacity;
+}
+#swiper .swiper-slide.active .swiper__title {
+  color: white;
+  transition: all 0.3s ease-in-out;
+}
+#swiper .swiper-slide.active .swiper__content {
+  position: relative;
+  background-color: #34399d;
+  z-index: 100 !important;
+}
+#swiper .swiper__container {
+  width: 100%;
+}
+#swiper .swiper__content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 100 !important;
+}
+#swiper .swiper__title {
+  font-size: 14px;
+  font-weight: 800;
+  text-align: center;
+  color: white;
+  margin: 0;
+  padding: 10px 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.swiper-wrapper {
+  position: absolute;
+}
+
+.swiper-wrapper:focus-within .swiper-slide,
+.swiper-wrapper:hover .swiper-slide {
+  transform: translate3d(-25%, 0, 0);
+  transition: 0.4s transform;
+}
+
+.swiper-wrapper .swiper-slide:focus ~ .swiper-slide,
+.swiper-wrapper .swiper-slide:hover ~ .swiper-slide {
+  transform: translate3d(25%, 0, 0);
+  transition: 0.4s transform;
+}
+
+.swiper-wrapper .swiper-slide:focus,
+.swiper-wrapper .swiper-slide:hover {
+  transform: scale(1.5);
+  transition: 0.4s scale;
+}
+
+.lh-2 {
+  line-height: 2rem;
+}
+
+/**
  * Students section
  */
 .students {
@@ -11677,7 +11787,7 @@ input[type=text].searchbar__input:selection {
    */
 }
 .students__head {
-  padding: 20px;
+  padding: 20px 20px;
   color: #34399d;
   height: 80px;
 }
@@ -11793,12 +11903,24 @@ input[type=text].searchbar__input:selection {
   /* Параметры тени */
   margin-left: 20px !important;
 }
+.students__select {
+  position: relative;
+}
+.students__select:after {
+  content: "";
+  box-sizing: border-box;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  position: absolute;
+  top: 6px;
+  right: 4px;
+}
 .students__select select {
   display: block;
   font-size: 16px;
   font-family: sans-serif;
   font-weight: 700;
-  color: #444;
+  color: #34399d;
   line-height: 1.3;
   padding: 0.6em 1.4em 0.5em 0.8em;
   width: 100%;
@@ -11806,19 +11928,16 @@ input[type=text].searchbar__input:selection {
   /* useful when width is set to anything other than 100% */
   box-sizing: border-box;
   margin: 0;
-  border: 1px solid #aaa;
-  box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
-  border-radius: 0.5em;
+  border: 1px solid #9a9d9f;
+  border-radius: 0.2em;
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
   background-color: #fff;
-  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"), linear-gradient(to bottom, #ffffff 0%, #e5e5e5 100%);
-  background-repeat: no-repeat, repeat;
   /* arrow icon position (1em from the right, 50% vertical) , then gradient position*/
-  background-position: right 0.7em top 50%, 0 0;
   /* icon size, then gradient */
   background-size: 0.65em auto, 100%;
+  position: relative;
 }
 .students__select select::-ms-expand {
   display: none;
@@ -11839,10 +11958,9 @@ input[type=text].searchbar__input:selection {
 }
 .students__select select:disabled, .students__select select[aria-disabled=true] {
   color: graytext;
-  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22graytext%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"), linear-gradient(to bottom, #ffffff 0%, #e5e5e5 100%);
 }
 .students__select select:disabled:hover, .students__select select[aria-disabled=true] {
-  border-color: #aaa;
+  border-color: #9a9d9f;
 }
 .students__table {
   width: 100%;
@@ -11850,10 +11968,15 @@ input[type=text].searchbar__input:selection {
 .students__table--header {
   display: grid;
   grid-template-areas: "header__student header__points header__percent header__date header__login header__time header__laststep header__lastlogin header__contact";
-  grid-template-columns: 140px 140px 1fr 160px 160px 160px 240px 240px 140px;
+  grid-template-columns: 140px 140px 1fr 140px 160px 160px 240px 240px 140px;
+  border-bottom: 1px solid #f1f2ee;
+  box-shadow: 0 5px 10px #f1f2ee;
   margin: 0;
 }
 .students__table--header > div {
+  font-size: 14px;
+  font-weight: 700;
+  color: #34399d;
   padding: 15px 20px;
   cursor: pointer;
 }
@@ -11868,9 +11991,6 @@ input[type=text].searchbar__input:selection {
   background-color: #34399d;
   color: white;
 }
-.students__table--row.active .students__table--rowshort .percentbar:after {
-  color: white;
-}
 .students__table--row.active .students__table--rowextra {
   height: auto;
 }
@@ -11878,7 +11998,7 @@ input[type=text].searchbar__input:selection {
   display: block;
 }
 .students__table--row.active .students__table--rowextra {
-  padding: 35px 20px;
+  padding: 20px;
 }
 .students__table--row.active .students__table--rowshort .row__button {
   background-color: white !important;
@@ -11894,7 +12014,7 @@ input[type=text].searchbar__input:selection {
 .students__table--rowshort {
   display: grid;
   grid-template-areas: "row__student row__points row__percent row__date row__login row__time row__laststep row__lastlogin row__contact";
-  grid-template-columns: 140px 140px 1fr 140px 160px 160px 240px 240px 140px;
+  grid-template-columns: 240px 140px auto 140px 160px 160px 240px 240px 140px;
   margin: 0;
 }
 .students__table--rowshort .row__student, .students__table--rowshort .row__points, .students__table--rowshort .row__percent, .students__table--rowshort .row__date, .students__table--rowshort .row__login, .students__table--rowshort .row__time, .students__table--rowshort .row__laststep, .students__table--rowshort .row__lastlogin, .students__table--rowshort .row__contact {
@@ -11915,6 +12035,12 @@ input[type=text].searchbar__input:selection {
   text-align: center;
   overflow: hidden;
   margin-right: 10px;
+}
+.students__table--rowshort .row__student--avatar img {
+  max-width: 60px;
+  max-height: 60px;
+  width: 100%;
+  height: 100%;
 }
 .students__table--rowshort .row__contact .row__button {
   background-color: #8185c2;
@@ -12033,6 +12159,9 @@ input[type=text].searchbar__input:selection {
   padding: 2px;
   width: 100%;
   margin-right: 30px;
+}
+.percentbar.active:after {
+  color: white;
 }
 .percentbar:after {
   content: attr(data-percentage) "%";

@@ -22,8 +22,21 @@
 // Fontawersome styles
 @import "fas/fontawesome";
 
+html {
+    scroll-behavior: smooth;
+}
+
 .bg-light{
     background-color: $bg-light;
+}
+
+/**
+ * Main container
+ */
+.dashboard {
+    &__container {
+        padding: 0 40px;
+    }
 }
 
 /**
@@ -79,13 +92,130 @@
 }
 
 /**
+ * Swiper section
+ */
+#swiper {
+    background-color: #fff;
+    padding: 40px 0;
+    transition: 0.4s transform;
+
+    .swiper {
+
+        &-slide {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            min-height: 200px;
+            background-size: cover !important;        
+            background-repeat: no-repeat !important;
+            background-position: center center !important;
+            margin-right: 10px;
+            transition: 0.4s transform;
+            z-index: 10 !important;
+
+            &:hover {
+                .swiper-slide:after {
+                    opacity: 0 !important;
+                }
+            }
+
+            &:after {
+                position: absolute;
+                content: '';
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0,0,0,0.6);
+                opacity: 1;
+                transition: 0.3s opacity;
+            }
+
+            &:hover:after {
+                background-color: rgba(0,0,0,0.0);
+                opacity: 0;
+                transition: 0.3s opacity;
+            }
+
+            &.active {
+
+                &:after {
+                    background-color: rgba(0,0,0,0.0);
+                    opacity: 0;
+                    transition: 0.3s opacity;
+                }
+
+                .swiper__title {
+                    color: white;
+                    transition: all 0.3s ease-in-out;
+                }
+
+                .swiper__content {
+                    position: relative;
+                    background-color: $primary;
+                    z-index: 100 !important;
+                }
+            }
+        }
+
+        &__container {
+            width: 100%;
+        }
+
+        &__content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 40px;
+            background-color: rgba(0,0,0,0.6);
+            z-index: 100 !important;
+        }
+
+        &__title {
+            font-size: 14px;
+            font-weight: 800;
+            text-align: center;
+            color: white;
+            margin: 0;
+            padding: 10px 0;
+            transition: all 0.3s ease-in-out;
+        }
+    }
+}
+
+// I was having specificty issues with the below so I took a different approach:
+
+.swiper-wrapper {
+    position: absolute;
+}
+
+.swiper-wrapper:focus-within .swiper-slide,
+.swiper-wrapper:hover .swiper-slide {
+    transform: translate3d(-25%, 0, 0);
+    transition: 0.4s transform;
+}
+
+.swiper-wrapper .swiper-slide:focus ~ .swiper-slide,
+.swiper-wrapper .swiper-slide:hover ~ .swiper-slide {
+    transform: translate3d(25%, 0, 0);
+    transition: 0.4s transform;
+}
+
+.swiper-wrapper .swiper-slide:focus,
+.swiper-wrapper .swiper-slide:hover {
+    transform: scale(1.5);
+    transition: 0.4s scale;
+}
+.lh-2{
+    line-height: 2rem;
+}
+/**
  * Students section
  */ 
  .students{
      background-color: white;
 
      &__head{
-        padding: $table-padding-left;
+        padding: $table-padding-left $table-padding-left-extended;
         color: $primary;
         height: 80px;
 
@@ -173,35 +303,47 @@
         }
 
      }
-     
+
      &__select{
+         position: relative;
+        &:after{
+            content: "\f078";
+            box-sizing: border-box;
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            top:6px;
+            right:4px;
+        }
         select{
             display: block;
             font-size: 16px;
             font-family: sans-serif;
             font-weight: 700;
-            color: #444;
+            color: $primary;
             line-height: 1.3;
             padding: .6em 1.4em .5em .8em;
             width: 100%;
             max-width: 100%; /* useful when width is set to anything other than 100% */
             box-sizing: border-box;
             margin: 0;
-            border: 1px solid #aaa;
-            box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
-            border-radius: .5em;
+            border: 1px solid $primary-text;
+            border-radius: .2em;
             -moz-appearance: none;
             -webkit-appearance: none;
             appearance: none;
             background-color: #fff;
-            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'),
-            linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%);
-            background-repeat: no-repeat, repeat;
+            // background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'),
+            // linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%);
+            // background-repeat: no-repeat, repeat;
             /* arrow icon position (1em from the right, 50% vertical) , then gradient position*/
-            background-position: right .7em top 50%, 0 0;
+            // background-position: right .7em top 50%, 0 0;
             /* icon size, then gradient */
             background-size: .65em auto, 100%;
-        
+            position: relative;
+
+            
+
             &::-ms-expand {
                 display: none;
             }
@@ -224,15 +366,16 @@
         
             &:disabled, &[aria-disabled=true] {
                 color: graytext;
-                background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22graytext%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'),
-                linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%);
+                // background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22graytext%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'),
+                // linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%);
             }
 
             &:disabled:hover, &[aria-disabled=true] {
-                border-color: #aaa;
+                border-color: $primary-text;
             }
         }
      }
+     
      /**
       * TABLE sections
       */
@@ -242,12 +385,17 @@
         &--header{
             display: grid;
             grid-template-areas: "header__student header__points header__percent header__date header__login header__time header__laststep header__lastlogin header__contact";
-            grid-template-columns: 140px 140px 1fr 160px 160px 160px 240px 240px 140px; 
+            grid-template-columns: 140px 140px 1fr 140px 160px 160px 240px 240px 140px; 
+            border-bottom: 1px solid #f1f2ee;
+            box-shadow: 0 5px 10px #f1f2ee;
             margin: 0;
 
             
 
             &>div{
+                font-size: 14px;
+                font-weight: 700;
+                color: $primary;
                 padding:  15px $table-padding-left;
                 cursor:   pointer;
 
@@ -269,11 +417,6 @@
                 .students__table--rowshort{
                     background-color: $primary;
                     color: white;
-                    .percentbar{
-                        &:after{
-                            color:white; 
-                        }
-                    }
                 }
 
                 .students__table--rowextra{
@@ -285,7 +428,7 @@
                 }
 
                 .students__table--rowextra{
-                    padding: 35px $table-padding-left;
+                    padding: $table-padding-left-extended;
                 }
 
                 .students__table--rowshort .row__button{
@@ -308,7 +451,7 @@
         &--rowshort{
             display: grid;
             grid-template-areas: "row__student row__points row__percent row__date row__login row__time row__laststep row__lastlogin row__contact";
-            grid-template-columns: 140px 140px 1fr 140px 160px 160px 240px 240px 140px; 
+            grid-template-columns: 240px 140px auto 140px 160px 160px 240px 240px 140px; 
             margin: 0;
 
             .row{
@@ -321,7 +464,7 @@
                 &__laststep,
                 &__lastlogin,
                 &__contact {
-                    padding: 15px $table-padding-left;
+                    padding: 15px $table-padding-left-extended;
                     font-size: 12px;
                     display: flex;
                     align-content: center;
@@ -339,6 +482,13 @@
                         text-align: center;
                         overflow: hidden;
                         margin-right:10px;
+                        
+                        img {
+                            max-width: 60px;
+                            max-height: 60px;
+                            width: 100%;
+                            height: 100%;
+                        }                        
                     }
                 }
 
@@ -476,7 +626,11 @@
     width: 100%;
     margin-right:30px;
 
-    
+    &.active{
+        &:after{
+            color:white; 
+        }
+    }
 
     &:after{
         content: attr(data-percentage) "%";
