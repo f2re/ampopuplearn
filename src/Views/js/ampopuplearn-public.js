@@ -1,4 +1,36 @@
 window.onload = function () {
+
+	var bus = new Vue();
+
+	Vue.component('vue-swiper', {
+		data: function() {
+			return {
+			   imageItems:[],
+			   infinite: true,
+			}
+		},
+		props:['url','active_category'],
+			mounted: function () {
+			var amSwiper = new Swiper ('.swiper__container', {
+				centeredSlides: false,
+				direction: 'horizontal',
+				loop: this.infinite,
+				nextButton: '.swiper-button-next',
+				prevButton: '.swiper-button-prev',
+				slidesPerView: 6,
+			});
+		},
+		methods: {
+			setCategory(id){
+				bus.$emit('setCategory',id);
+				// console.log(id);
+			},
+			beforeMount(){
+				this.setCategory(5)
+			}
+		},		
+	});
+
 	/**
 	 * Vue main component 
 	 * AmpopMusic plugin
@@ -9,7 +41,7 @@ window.onload = function () {
 	  data:{
 		// urls array
 		urls:{
-			students: '/wp-json/',
+			// students: '/wp-json/',
 			// get list of courses
 			courses: '/wp-json/ldlms/v1/sfwd-courses',
 			students: '/wp-admin/admin-ajax.php',
@@ -26,6 +58,9 @@ window.onload = function () {
 		datefrom:'',
 		dateto:'',
 
+		// group ID 
+		groupid: false,
+
 		// sort params
 		sort:'name',
 		reversesort:false,
@@ -40,7 +75,7 @@ window.onload = function () {
 			
 			
 			// filter by courses
-			if ( _vue.active_category>0 ){
+			if ( _vue.active_category>0 && prepared.length>0 ){
 				prepared = prepared.filter( obj => {
 					if ( obj.courseprogress.indexOf( _vue.active_category ) !== -1 ){
 						return true;
@@ -82,6 +117,7 @@ window.onload = function () {
 			}else{
 				this.active_category = parseInt(id);
 			}
+			// console.log("asdf");
 			// console.log(id);
 		},
 
@@ -113,29 +149,42 @@ window.onload = function () {
 				this.sort=label;
 				this.reversesort=false;
 			}
-		}
+		},
+
+		/**
+		 * loading users by category id
+		 */
+		loadUsers(){
+			let _vue = this;
+			fetch( '/wp-admin/admin-ajax.php',{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+				},
+				credentials: 'same-origin',
+				body: 'action=ampopmusic_getreport&category_id='+_vue.groupid,
+			} ).then((response) => {
+				return response.json();
+			  }).then( data => {
+				// save Students
+				// console.log(_vue.students);
+				_vue.students = data.data;
+				// save active category
+				// _vue.active_category = data.category_id;
+			});
+		},
 	  },
 	  mounted: function(){
 		let _vue = this;
-		fetch( '/wp-admin/admin-ajax.php',{
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-			},
-			credentials: 'same-origin',
-			body: 'action=ampopmusic_getreport&category_id='+"123",
-		} ).then((response) => {
-			return response.json();
-		  }).then( data => {
-			// save Students
-			_vue.students = data.data;
-			console.log(_vue.students);
-			// save active category
-			// _vue.active_category = data.category_id;
-		});
-
+		
+		_vue.loadUsers();
 		return;
 
+	  },
+	  //   emit on created component
+	  created(){
+		//   bind bus emit when click on button
+		bus.$on('setCategory',this.setCategory);
 	  }
 	});
 };

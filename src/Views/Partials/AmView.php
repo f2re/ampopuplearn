@@ -29,7 +29,7 @@ class AmView {
      * @return void
      */
     public function get_report(){
-        $category_id = 123;
+        $category_id = (int)($_POST['category_id']);
         $data = PostHelper::get_category_students($category_id);
         // $response = \rest_ensure_response( $data ); 
         // return $response;
@@ -105,6 +105,7 @@ class AmView {
      */
     private function print_begin(){
         ?>
+
         <div id="ampopmusiclearn" class="bg-light w-100 h-100">
             <div class="dashboard__container">
         <?php
@@ -130,6 +131,7 @@ class AmView {
             </div>
             <input type="text" class="form-control searchbar__input" v-model="query" placeholder="Search for student">
         </div>
+
         <?php
     }
 
@@ -141,22 +143,40 @@ class AmView {
     private function print_head(){
         // get music categories or tab
         $tabs = PostHelper::get_music_categories(true);
+        $image_url = '';
+
         ?>
-            <div class="slider__wrap">
-                <Slider />
-                <div class="d-flex justify-content-between align-content-between flex-nowrap ampoptabs">
-                    <?php
-                        foreach ($tabs as $tab){
-                            ?>
-                            <button class="btn btn-primary ampoptabs__button" 
-                                    v-bind:class="{active:active_category==<?=$tab['id']?>}"
-                                    v-on:click="setCategory('<?=$tab['id']?>')"><?=$tab['title']?></button>
-                            <?php
-                        }
-                    ?>
-                </div>
+            <div id="swiper" class="d-flex justify-content-between align-content-between flex-nowrap ampoptabs">
+                <vue-swiper inline-template :active_category="active_category">
+                    <div class="swiper__container">
+
+                        <div class="swiper-wrapper">
+
+                            <?php foreach ($tabs as $tab) : 
+                                    $image_url = get_field('background', $tab['id']);
+                                ?>
+                                <div class="swiper-slide" style="background: url('<?=$image_url?>');" v-bind:class="{active:active_category==<?=$tab['id']?>}" v-on:click="setCategory('<?=$tab['id']?>')">
+                                    <!--<button class="btn btn-primary ampoptabs__button"
+                                        v-bind:class="{active:active_category==<?=$tab['id']?>}"
+                                        v-on:click="setCategory('<?=$tab['id']?>')"><?=$tab['title']?>                                            
+                                    </button>-->
+                                    <div class="swiper__content">
+                                        <h3 class="swiper__title"
+                                            v-bind:class="{active:active_category==<?=$tab['id']?>}"
+                                            v-on:click="setCategory('<?=$tab['id']?>')"><?=$tab['title']?>                                            
+                                        </h3>
+                                    </div>
+
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>                         
+                </vue-swiper>           
             </div>
         <?php
+
     }
 
     /**
@@ -180,10 +200,51 @@ class AmView {
             <div class="students__head d-flex justify-content-between align-content-between"> 
                 <h1>Students <div class="badge badge-light students__head--badge">{{students.length}}</div> </h1>
 
+                
+                <?php
+                    
+                    $groups = PostHelper::get_admin_groups();
+                    // print_r($groups);
+
+                    if ( is_array($groups) && count($groups)>0 ){
+                        ?>
+                        
+                        <select class="students__select" name="select" v-model="groupid" @change="loadUsers"  :run="!groupid?groupid=<?=array_shift(array_slice($groups,0,1))?>:groupid">
+                            <?php 
+                            $_f = 0;
+                            foreach ($groups as $id){ ?>
+                                <option value="<?=$id?>" ><?=get_the_title($id)?></option>
+                            <?php 
+                            }
+                            ?>
+                        </select>
+                        <?php
+                    }
+
+                    /* Query Groups
+                    foreach($group_ids as $group_id) {
+                        echo $group_id;
+                        $args = array(
+                            'post_type'         =>  'groups',
+                            'posts_per_page'    =>  -1,
+                            'post__in'          =>  $group_id
+                        );
+                        
+                        
+                        $query = new \WP_Query( $args );
+
+                        print_r($query);
+                            wp_reset_postdata();                        
+                    }
+                    */
+                ?>
+
+
+
                 <div class="d-flex justify-content-end">
                     <button class="btn btn-primary students__head--button"><i class="fas fa-file-pdf"></i> PDF </button>
                     <button class="btn btn-primary students__head--button ml-4"><i class="fas fa-envelope"></i> Email </button>
-                    
+  
                     <div class="input-group ml-4 students__head--group">
                         <div class="input-group-prepend students__head--prepend">
                             <span class="input-group-text" >FROM:</span>
@@ -360,16 +421,18 @@ class AmView {
             </div>
         <?php
     }
-    
+
     /**
      * [enqueue_scripts jquery and validate
      * @return [type] [description]
      */
     public function enqueue_scripts(){  
+
         wp_enqueue_script( 'vue', plugin_dir_url( __FILE__ ) . '../js/vendor/vue.js', [], '2.6.11', false );
-        wp_enqueue_script( 'httpVueLoader', plugin_dir_url( __FILE__ ) . '../js/vendor/httpVueLoader.js', [], '', false );
+        wp_enqueue_script( 'htppVueLoader', plugin_dir_url( __FILE__ ) . '../js/vendor/httpVueLoader.js', [], '', false );
+        wp_enqueue_script( 'vuetify', 'https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js', [], '', false );
+        wp_enqueue_script( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@5.3.6/js/swiper.min.js', [], '', false );
         wp_enqueue_script( 'vue-awesome-swiper', 'https://cdn.jsdelivr.net/npm/vue-awesome-swiper', [], '', false );
-        wp_enqueue_script( 'vue-awesome-swiper-library', 'https://cdn.jsdelivr.net/npm/swiper@5.3.6/js/swiper.min.js', [], '', false );
 		wp_enqueue_script( 'ampoppublic', plugin_dir_url( __FILE__ ) . '../js/ampopuplearn-public.js', array( 'vue' ), '1.0', false );
         wp_localize_script( 'ampoppublic', 'ampoppublic_params', array( 
             'userid' 	=> 	\get_current_user_id(  ), 
@@ -387,8 +450,10 @@ class AmView {
      * @return [type] [description]
      */
     public function enqueue_styles(){  
-        wp_enqueue_style( 'ampoppublic_style', plugin_dir_url( __FILE__ ) . '../css/ampopuplearn-public.css', array(), '1.0', 'all' );
-        wp_equene_style( 'vue-awesome-swiper-styles', 'https://cdn.jsdelivr.net/npm/swiper@5.3.6/css/swiper.min.css', array(), '1.0' 'all');
+        wp_enqueue_style( 'ampoppublic_style', plugin_dir_url( __FILE__ ) . '../css/style.css', array(), '1.0', 'all' ); // update was for ease of use, I think you're taking advantage of a workspace which I need to try
+        wp_enqueue_style( 'vuetify', 'https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css', array(), '', 'all' );
+        wp_enqueue_style( 'material-design-icons', 'https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css', array(), '', 'all' );
+        wp_enqueue_style( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@5.3.6/css/swiper.min.css', array(), '', 'all' );
     }
 
 }

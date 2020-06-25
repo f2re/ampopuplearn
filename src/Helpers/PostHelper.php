@@ -11,6 +11,32 @@ namespace AmpopupLearn\Helpers;
 class PostHelper {
 
     /**
+     * get admin groups
+     */
+    public static function get_admin_groups(){
+        $current_user = wp_get_current_user();
+
+        $group_ids = learndash_get_administrators_group_ids( $current_user->ID, true );
+        
+        if ( ! empty( $group_ids ) ) {
+            return $group_ids;
+            $user_query_args = array(
+                'include'   =>  $group_ids,
+                'orderby'   =>  'display_name',
+                'order'     =>  'ASC',
+                'number'    =>  20
+            );
+
+            $user_query = new \WP_User_Query( $user_query_args );
+            $res = $user_query->query();
+            wp_reset_postdata();
+
+            return $res;
+        }
+        return false;
+    }
+
+    /**
      * Get music categories as tabs
      * @is_shortly - if true, then translate short titles 
      */
@@ -24,7 +50,7 @@ class PostHelper {
         );
 
         $study_units_data = array();
-
+        
         foreach($study_units->posts as $study_unit) {
 
             $suid     = $study_unit->ID;
@@ -54,15 +80,24 @@ class PostHelper {
     }
 
     // get category students
-    public static function get_category_students($category_id=123){
-        $users = get_users();
+    public static function get_category_students($category_id){
+        $users = \learndash_get_groups_user_ids( (int)( $category_id ) );
         $result = [];
+        // $result[1000] =  $users;
+        // print_r($category_id);
+        // print_r($users);
+        // $users = get_users();
         $i = 0;
 		foreach($users as $user){
-			$fullname = get_user_meta($user->ID,'first_name', true).' '.get_user_meta($user->ID,'last_name',true);
-			$user_email = $user->user_email;
-			$course_access_counter = get_user_meta($user->ID,'_learndash_memberpress_enrolled_courses_access_counter',true);
-            $courseprogress = get_user_meta($user->ID, '_sfwd-course_progress');
+            $user_info = get_userdata($user);
+			$fullname = get_user_meta($user,'first_name', true).' '.get_user_meta($user,'last_name',true);
+			$user_email = $user_info->user_email;
+			$course_access_counter = get_user_meta($user,'_learndash_memberpress_enrolled_courses_access_counter',true);
+            $courseprogress = get_user_meta($user, '_sfwd-course_progress');
+            $login_count = intval(get_user_meta($user, 'user_count', true));
+            $course_point = get_user_meta($user, '_badgeos_points', true);
+            $last_login = get_user_meta($user,'last_login',true);
+    		$the_login_date = date('m/d/Y H:i:s', $last_login);
             if ( is_array($courseprogress) && isset($courseprogress[0]) ){
                 $_keys = [];
                 foreach ( $courseprogress[0] as $key=>$arr ){
@@ -70,18 +105,18 @@ class PostHelper {
                 }
                 $courseprogress = $_keys;
             }
-			$metadata = get_user_meta($user->ID);
+			$metadata = get_user_meta($user);
 			$user->metadata = $metadata;
             $result[$i]['name'] = $fullname;
-            $result[$i]['avatar'] = 'https://via.placeholder.com/30';
-            $result[$i]['points'] = rand(6000,10000);
+            $result[$i]['avatar'] = get_avatar_url($user);
+            $result[$i]['points'] = $course_point;
             $result[$i]['percents'] = rand(0,100);
             $result[$i]['startDate'] = '01-15-2019';
-            $result[$i]['loginCount'] = rand(0,100);
+            $result[$i]['loginCount'] = $login_count;
             $result[$i]['courseTime'] = rand(1,24).':'.rand(1,60).':00';
             $result[$i]['lastStepUnit'] = 'Jess Study Unit';
             $result[$i]['lastStepChapter'] = 'Jess Study Unit';
-            $result[$i]['lastLoginLdate'] = '01-15-2020';
+            $result[$i]['lastLoginLdate'] = $the_login_date;
             $result[$i]['email'] = $user_email;
             $result[$i]['active'] = false;
             $result[$i]['quiz'] = [
@@ -92,7 +127,7 @@ class PostHelper {
                     'date' => '01-15-2019',
                     'duration' => rand(1,24).':'.rand(1,60).':00',
                     ]];
-                    $result[$i]['courses'] = [
+            $result[$i]['courses'] = [
                 [
                     'name' => 'Chapter 1 Quiz',
                     'attempts'=>rand(0,50),
